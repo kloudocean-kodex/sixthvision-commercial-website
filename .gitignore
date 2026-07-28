@@ -5,3 +5,4 @@ lighthouse-report.json
 lh-*.json
 localhost_*.report.html
 _perftest.*
+archive-unused-assets/

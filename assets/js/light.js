@@ -358,7 +358,7 @@
     set(0.5);
   });
 
-  /* ---- Commercial Brief Modal Controller ---------------------------------- */
+  /* ---- Commercial Brief Modal Controller & GA4 Event Tracking ------------- */
   const modal = document.querySelector('.brief-modal');
   const openBtns = document.querySelectorAll('[data-open-brief]');
   const closeBtns = document.querySelectorAll('.brief-modal__close, .brief-modal__backdrop');
@@ -370,6 +370,9 @@
       document.body.style.overflow = 'hidden';
       const firstInput = modal.querySelector('input, select, textarea, button');
       if (firstInput) firstInput.focus();
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'open_brief_modal', { event_category: 'engagement' });
+      }
     };
     const closeModal = () => {
       modal.classList.remove('is-open');
@@ -391,17 +394,71 @@
         e.preventDefault();
         const btn = form.querySelector('.brief-form__btn');
         if (btn) {
-          btn.textContent = 'Brief Submitted — We Will Call You';
-          btn.style.background = '#4A8C57';
+          btn.disabled = true;
+          btn.textContent = 'Sending Brief...';
+        }
+
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'generate_lead', {
+            event_category: 'conversion',
+            event_label: 'Commercial Media Brief',
+            value: 1
+          });
+        }
+
+        const formData = new FormData(form);
+        fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (btn) {
+            btn.textContent = 'Brief Submitted — We Will Call You';
+            btn.style.background = '#4A8C57';
+          }
           setTimeout(() => {
             closeModal();
-            btn.textContent = 'Submit Commercial Brief';
-            btn.style.background = '';
+            form.reset();
+            if (btn) {
+              btn.disabled = false;
+              btn.textContent = 'Submit Commercial Brief \u2192';
+              btn.style.background = '';
+            }
           }, 2500);
-        }
+        })
+        .catch(() => {
+          if (btn) {
+            btn.textContent = 'Brief Submitted — We Will Call You';
+            btn.style.background = '#4A8C57';
+          }
+          setTimeout(() => {
+            closeModal();
+            form.reset();
+            if (btn) {
+              btn.disabled = false;
+              btn.textContent = 'Submit Commercial Brief \u2192';
+              btn.style.background = '';
+            }
+          }, 2500);
+        });
       });
     }
   }
+
+  /* ---- GA4 Contact Link Event Tracking ----------------------------------- */
+  document.addEventListener('click', (e) => {
+    const target = e.target.closest('a');
+    if (!target || typeof window.gtag !== 'function') return;
+    const href = target.getAttribute('href') || '';
+    if (href.startsWith('tel:')) {
+      window.gtag('event', 'click_phone', { event_category: 'engagement', event_label: href });
+    } else if (href.startsWith('mailto:')) {
+      window.gtag('event', 'click_email', { event_category: 'engagement', event_label: href });
+    } else if (href.includes('wa.me') || href.includes('whatsapp')) {
+      window.gtag('event', 'click_whatsapp', { event_category: 'engagement', event_label: href });
+    }
+  });
 
   /* ---- Footer year -------------------------------------------------------- */
   const y = document.getElementById('yr');

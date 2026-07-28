@@ -12,6 +12,7 @@ Allow: /assets/video/
 # Housekeeping folders that must never be indexed if they are ever deployed.
 Disallow: /archive-v2/
 Disallow: /archive-25fps/
+Disallow: /archive-unused-assets/
 Disallow: /.claude/
 
 Sitemap: https://sixthvisioncommercial.com.au/sitemap.xml

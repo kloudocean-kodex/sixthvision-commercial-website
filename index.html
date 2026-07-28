@@ -28,14 +28,22 @@
 <meta name="twitter:image:alt" content="Sixth Vision Commercial — commercial real estate photographer, Melbourne">
 <meta name="theme-color" content="#F4F5F3">
 
+<!-- Google tag (gtag.js) GA4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EHCPLDXEK6"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-EHCPLDXEK6');
+</script>
+
 <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
 <link rel="preload" href="assets/fonts/fraunces-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/jost-variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/img/stock-hero-poster-1600.webp">
 <!-- Consolidated High-Performance Design System & Chapter Stylesheet (v250) -->
-<link rel="preload" href="assets/fonts/fraunces-variable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="assets/fonts/jost-variable.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/app.css?v=253">
+<link rel="stylesheet" href="assets/css/app.css?v=254">
 
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":["ProfessionalService","PhotographyBusiness"],
@@ -130,7 +138,7 @@
            autoplay muted loop playsinline preload="metadata"
            poster="assets/img/stock-hero-poster-1600.webp"
            aria-label="Dawn over Melbourne: fog clears to reveal a completed industrial facility">
-      <source src="assets/video/stock-hero-arrival.mp4?v=253" type="video/mp4">
+      <source src="assets/video/stock-hero-arrival.mp4?v=254" type="video/mp4">
     </video>
 
     <div class="frame__light" aria-hidden="true"></div>
@@ -215,7 +223,7 @@
                disablepictureinpicture disableremoteplayback
                poster="assets/img/measure-poster-1280.webp"
                aria-label="Aerial survey flight across an industrial logistics facility, annotated with site metrics">
-          <source src="assets/video/ai-measure-loop.mp4?v=253" type="video/mp4">
+          <source src="assets/video/ai-measure-loop.mp4?v=254" type="video/mp4">
         </video>
       </div>
     </figure>
@@ -926,7 +934,7 @@
   </div>
 </footer>
 
-<script src="assets/js/light.js?v=253" defer></script>
+<script src="assets/js/light.js?v=254" defer></script>
 
 <!-- ENTERPRISE CRO: FLOATING CTA & COMMERCIAL BRIEF MODAL -->
 <a href="#brief-modal" class="floating-cta" data-open-brief aria-label="Open Commercial Media Brief Request Form">
@@ -940,31 +948,34 @@
     <button type="button" class="brief-modal__close" aria-label="Close modal">&times;</button>
     <h3 class="brief-modal__title" id="modal-title">Commission Asset Coverage</h3>
     <p class="brief-modal__sub">Receive a guaranteed 24-hour commercial coverage brief & site measurement proposal for your Melbourne or Victorian property.</p>
-    <form class="brief-form">
+    <form class="brief-form" action="https://api.web3forms.com/submit" method="POST">
+      <input type="hidden" name="access_key" value="054de5ac-dd80-4ff7-83eb-f5db45c2e88d">
+      <input type="hidden" name="subject" value="New Commercial Media Brief — Sixth Vision Commercial">
+      <input type="hidden" name="from_name" value="Sixth Vision Website">
       <div class="brief-form__group">
         <label class="brief-form__label" for="brief-name">Your Name</label>
-        <input type="text" id="brief-name" class="brief-form__input" placeholder="e.g. Marcus Vance" required>
+        <input type="text" id="brief-name" name="name" class="brief-form__input" placeholder="e.g. Marcus Vance" required>
       </div>
       <div class="brief-form__group">
         <label class="brief-form__label" for="brief-agency">Agency / Enterprise</label>
-        <input type="text" id="brief-agency" class="brief-form__input" placeholder="e.g. CBRE Commercial / Goodman" required>
+        <input type="text" id="brief-agency" name="agency" class="brief-form__input" placeholder="e.g. CBRE Commercial / Goodman" required>
       </div>
       <div class="brief-form__group">
         <label class="brief-form__label" for="brief-email">Direct Email or Phone</label>
-        <input type="text" id="brief-email" class="brief-form__input" placeholder="e.g. marcus@agency.com.au or 0400 000 000" required>
+        <input type="text" id="brief-email" name="contact" class="brief-form__input" placeholder="e.g. marcus@agency.com.au or 0400 000 000" required>
       </div>
       <div class="brief-form__group">
         <label class="brief-form__label" for="brief-type">Property Category</label>
-        <select id="brief-type" class="brief-form__select">
-          <option value="industrial">Industrial &amp; Logistics Facility</option>
-          <option value="office">Office &amp; Corporate Tower</option>
-          <option value="retail">Retail Strip &amp; Showroom</option>
-          <option value="land">Land &amp; Development Site</option>
+        <select id="brief-type" name="property_category" class="brief-form__select">
+          <option value="Industrial &amp; Logistics Facility">Industrial &amp; Logistics Facility</option>
+          <option value="Office &amp; Corporate Tower">Office &amp; Corporate Tower</option>
+          <option value="Retail Strip &amp; Showroom">Retail Strip &amp; Showroom</option>
+          <option value="Land &amp; Development Site">Land &amp; Development Site</option>
         </select>
       </div>
       <div class="brief-form__group">
         <label class="brief-form__label" for="brief-notes">Site Details / Address</label>
-        <textarea id="brief-notes" class="brief-form__textarea" rows="3" placeholder="Property address, approximate m², or special requirements..."></textarea>
+        <textarea id="brief-notes" name="message" class="brief-form__textarea" rows="3" placeholder="Property address, approximate m², or special requirements..."></textarea>
       </div>
       <button type="submit" class="brief-form__btn">Submit Commercial Brief &rarr;</button>
     </form>
