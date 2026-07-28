@@ -1,0 +1,7 @@
+.claude/.env
+_debug-*.html
+# Lighthouse / audit output — regenerate, never commit
+lighthouse-report.json
+lh-*.json
+localhost_*.report.html
+_perftest.*

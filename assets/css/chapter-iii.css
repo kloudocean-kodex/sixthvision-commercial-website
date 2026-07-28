@@ -1,0 +1,158 @@
+/* ============================================================================
+   CHAPTER III — THE LIGHT                               light: Golden (.42→.62)
+
+   The product, performed. A day/dusk comparison the visitor drives by hand —
+   "the light, measured" made literal. Everything inherits the chapter system:
+   the same lit ground, the same glass material, the same editorial numeral, the
+   same Fraunces/Jost + gold. Only the --sun stop is warmer here, so the identical
+   ground/glass tokens render one hour later in the day on their own.
+
+   Asset honesty: the compared frames are the REGISTERED stock pair (same frame,
+   two hours), so the wipe is truthful — no "same shot" claim over two different
+   photographs. It is stock (prefixed `stock-`) and swaps for Ankkush's own
+   registered day→dusk before launch; the caption says so.
+   ========================================================================= */
+
+.ch-light{
+  padding:clamp(90px,13vh,170px) 0 clamp(96px,14vh,186px);
+  overflow:hidden; position:relative; isolation:isolate;
+  /* same lit-ground recipe as Chapter II — bright key pool, warm shaft, warm
+     vignette — but read at the .42→.62 sun, so it lands warmer by itself. */
+  background:
+    radial-gradient(115% 82% at 26% -6%,
+      color-mix(in oklab, var(--ground), #fff 60%) 0%, transparent 46%),
+    radial-gradient(92% 78% at 88% 52%,
+      color-mix(in srgb, var(--stop-4) 70%, transparent) 0%, transparent 58%),
+    radial-gradient(136% 118% at 44% 28%,
+      transparent 40%,
+      color-mix(in oklab, var(--ground-deep), var(--stop-d4) 72%) 100%),
+    linear-gradient(174deg,
+      color-mix(in oklab, var(--ground), #fff 20%) 0%,
+      color-mix(in oklab, var(--ground) 42%, var(--ground-deep)) 100%);
+}
+@supports not (background:color-mix(in srgb, #000 3%, #fff)){
+  .ch-light{background:var(--ground)}
+}
+
+/* --- III.a  intro (mirrors Chapter II's grid & numeral) ------------------ */
+.light__intro{
+  padding:0 var(--gutter);
+  display:grid; grid-template-columns:repeat(12,minmax(0,1fr));
+  column-gap:clamp(14px,1.9vw,28px); row-gap:clamp(20px,2.4vw,30px);
+  position:relative; z-index:1;
+}
+.light__numeral{
+  position:absolute; z-index:-1; pointer-events:none; user-select:none;
+  top:clamp(-38px,-3vw,-10px); right:calc(var(--gutter) - .06em);
+  margin:0; font-family:Fraunces, Georgia, serif;
+  font-variation-settings:'opsz' 144,'wght' 260,'SOFT' 40,'WONK' 1;
+  font-size:clamp(200px,30vw,460px); line-height:.66; letter-spacing:.02em;
+  color:color-mix(in srgb, var(--accent-ink) 12%, transparent);
+}
+@supports not (color:color-mix(in srgb, #000 8%, transparent)){
+  .light__numeral{color:rgba(122,90,34,.11)}
+}
+.light__eyebrow{grid-column:1 / -1}
+.light__h{
+  grid-column:1 / 9; margin:0;
+  font-size:var(--t-96); max-width:15ch;
+  font-variation-settings:'opsz' 144,'wght' 318,'SOFT' 28,'WONK' 1;
+  letter-spacing:var(--tr-display); line-height:.96;
+}
+.light__deck{grid-column:9 / 13; align-self:end; max-width:34ch; color:var(--ink)}
+
+/* --- III.b  the comparison ------------------------------------------------
+   A glass-framed window holding two registered frames. The DUSK frame is the
+   base; the DAY frame overlays from the left, its width driven by the handle,
+   so the visitor reads left→right as day→dusk — time moving under their hand. */
+.light__stage{margin:clamp(48px,6.5vw,104px) var(--gutter) 0; position:relative; z-index:1}
+
+.compare{
+  position:relative; margin:0;
+  background:var(--glass-face);
+  padding:clamp(8px,.85vw,15px);
+  border:1px solid var(--glass-edge);
+  box-shadow:var(--glass-thick), var(--sh-float-lg);
+}
+@supports not (border-color:color-mix(in srgb, #000 8%, transparent)){
+  .compare{border-color:rgba(20,22,26,.08)}
+}
+.compare::before{  /* the gold catchlight, as on every glass panel */
+  content:''; position:absolute; z-index:3; pointer-events:none;
+  top:0; left:0; right:0; height:1px; background:var(--glass-lip);
+}
+/* the window — clips the overlay, holds the handle, takes the pointer/keys */
+.compare__win{
+  position:relative; overflow:hidden; display:block;
+  aspect-ratio:3 / 2; background:var(--ground-deep);
+  border:1px solid rgba(20,22,26,.10);
+  cursor:ew-resize; touch-action:pan-y; outline:none;
+}
+.compare__base,
+.compare__after img{
+  display:block; width:100%; height:100%; object-fit:cover; user-select:none;
+  -webkit-user-drag:none;
+}
+/* the DAY overlay, revealed from the left edge to the handle */
+.compare__after{
+  position:absolute; top:0; left:0; height:100%; width:50%;
+  overflow:hidden; will-change:width;
+}
+.compare__after img{width:auto; max-width:none} /* JS pins it to window width */
+
+/* the handle */
+.compare__bar{
+  position:absolute; top:0; bottom:0; left:50%; width:2px; z-index:2;
+  margin-left:-1px; background:color-mix(in srgb, #fff 82%, transparent);
+  box-shadow:0 0 0 1px color-mix(in srgb, var(--ink) 20%, transparent),
+             0 0 18px rgba(20,22,26,.28);
+  pointer-events:none;
+}
+.compare__grip{
+  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+  width:clamp(42px,3.4vw,54px); height:clamp(42px,3.4vw,54px); border-radius:50%;
+  display:grid; place-items:center;
+  background:color-mix(in srgb, var(--ground) 62%, #fff);
+  border:1px solid var(--gold);
+  box-shadow:var(--glass-thick), 0 6px 18px rgba(20,22,26,.22);
+  color:var(--accent-ink);
+}
+@supports not (border-color:color-mix(in srgb, #000 8%, transparent)){
+  .compare__grip{border-color:rgba(194,160,74,.8); background:#F6F4EE}
+}
+.compare__grip svg{width:56%; height:56%}
+
+/* day / dusk tags, seated in the corners of the window */
+.compare__tag{
+  position:absolute; bottom:clamp(12px,1.4vw,20px); z-index:2;
+  padding:6px 12px;
+  font-size:11px; letter-spacing:var(--tr-caps); text-transform:uppercase;
+  font-weight:540; color:#fff;
+  background:color-mix(in srgb, #1a1712 42%, transparent);
+  -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px);
+  border:1px solid rgba(255,255,255,.14);
+}
+@supports not (background:color-mix(in srgb, #000 8%, transparent)){
+  .compare__tag{background:rgba(26,23,18,.5)}
+}
+.compare__tag--l{left:clamp(12px,1.4vw,20px)}
+.compare__tag--r{right:clamp(12px,1.4vw,20px)}
+
+/* caption row under the stage — the honesty line + a hint */
+.light__cap{
+  margin:clamp(13px,1.3vw,19px) 0 0;
+  display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  font-size:11px; letter-spacing:var(--tr-caps); text-transform:uppercase;
+  color:var(--muted); font-weight:500;
+}
+.light__cap b{font-weight:540; color:var(--accent-ink)}
+
+/* --- RESPONSIVE ---------------------------------------------------------- */
+@media (max-width:1040px){
+  .light__h{grid-column:1 / -1; font-size:var(--t-72)}
+  .light__deck{grid-column:1 / -1; max-width:52ch}
+  .light__numeral{display:none}
+}
+@media (max-width:720px){
+  .compare__win{aspect-ratio:4 / 3}
+}

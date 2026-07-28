@@ -1,0 +1,552 @@
+/* ============================================================================
+   CHAPTER II — THE MEASURE                              light: Morning (.20→.42)
+
+   AESTHETIC: a museum wall. The page ground is the gallery wall and warms with
+   --sun; every exhibit is a physically matted, framed piece floating a few
+   millimetres off it. The luxury is restraint — white matting, hairline rules,
+   one soft shadow, generous and STRUCTURED negative space (every element lands
+   on a 12-column line; no accidental gaps).
+
+   Frames are literal #fff: they represent matting board, not palette. Every
+   other colour derives from --sun via system.css.
+   ========================================================================= */
+
+/* THE GROUND IS LIT, not filled. The old wash moved through barely two tonal
+   levels (porcelain ~#F7F6F2 to stone ~#EDEBE4) — too narrow to read as anything
+   but flat grey, which is the "average website" tell. A lit ground needs a wide
+   RANGE and a warm/cool play:
+     · a bright KEY POOL upper-left where the intro and film sit (near #fff);
+     · a WARM SHAFT drifting in low from the right — the later golden light of
+       the --sun journey, borrowed one stop ahead (--stop-4) as a glow, never as
+       a fill (a warm ground tone, never --accent, which stains);
+     · a VIGNETTE deepening to warm stone in every corner, so the frame has
+       weight and the content sits in a pool of light.
+   Everything stays in light — the deepest corner is a warm stone (~#E7DECC),
+   never grey and never dark. This is the template the later chapters reuse. */
+.ch-measure{
+  padding:clamp(90px,13vh,170px) 0 clamp(90px,13vh,170px);
+  overflow:hidden; position:relative; isolation:isolate;
+  background:
+    radial-gradient(115% 82% at 26% -6%,
+      color-mix(in oklab, var(--ground), #fff 62%) 0%, transparent 46%),
+    radial-gradient(88% 76% at 86% 48%,
+      color-mix(in srgb, var(--stop-4) 62%, transparent) 0%, transparent 56%),
+    radial-gradient(134% 116% at 42% 26%,
+      transparent 42%,
+      color-mix(in oklab, var(--ground-deep), var(--stop-d4) 66%) 100%),
+    linear-gradient(174deg,
+      color-mix(in oklab, var(--ground), #fff 24%) 0%,
+      color-mix(in oklab, var(--ground) 46%, var(--ground-deep)) 100%);
+}
+@supports not (background:color-mix(in srgb, #000 3%, #fff)){
+  .ch-measure{background:var(--ground)}
+}
+
+/* --- the film bevel ------------------------------------------------------
+   Was an 18px slab of flat #fff, which on a near-white ground reads as a
+   chunky paper border rather than a mount. Now a THIN glass bevel: the face is
+   a gradient lit from the upper left, a gold catchlight runs the top edge, and
+   the inset lip pair gives it thickness. Deliberately no backdrop-filter — a
+   blur region touching a playing video forces a per-frame backdrop readback,
+   which is the one thing that must not come back after the cadence fix. */
+.frameplate{
+  position:relative;
+  background:var(--glass-face);
+  padding:clamp(6px,.62vw,11px);
+  border:1px solid var(--glass-edge);
+  box-shadow:var(--glass-thick), var(--sh-float-md);
+  transition:transform .8s var(--dolly), box-shadow .8s var(--dolly);
+}
+@supports not (background:color-mix(in srgb, #000 8%, transparent)){
+  .frameplate{border-color:rgba(20,22,26,.08)}
+}
+.frameplate::before{
+  content:''; position:absolute; z-index:2; pointer-events:none;
+  top:0; left:0; right:0; height:1px;
+  background:var(--glass-lip);
+}
+.frameplate img,
+.frameplate video{
+  width:100%; height:auto; display:block;
+  border:1px solid rgba(20,22,26,.10);
+}
+/* the lift: a camera easing in, not a bounce */
+@media (hover:hover) and (pointer:fine){
+  .frameplate:hover{
+    transform:translateY(-6px);
+    box-shadow:var(--glass-thick), var(--sh-float-lg);
+  }
+}
+
+/* --- II.a  intro --------------------------------------------------------- */
+.measure__intro{
+  padding:0 var(--gutter);
+  display:grid; grid-template-columns:repeat(12,minmax(0,1fr));
+  column-gap:clamp(14px,1.9vw,28px); row-gap:clamp(20px,2.4vw,30px);
+  position:relative; z-index:1;
+}
+/* the chapter numeral — a large, faint Fraunces "II" set behind the deck, the
+   way an editorial spread carries its section number. Barely there (a few
+   percent ink): felt as a watermark, never read as content. It fills the open
+   right column with intent instead of leaving it as accidental blank. */
+.measure__numeral{
+  position:absolute; z-index:-1; pointer-events:none; user-select:none;
+  top:clamp(-38px,-3vw,-10px); right:calc(var(--gutter) - .06em);
+  margin:0; font-family:Fraunces, Georgia, serif;
+  font-variation-settings:'opsz' 144,'wght' 260,'SOFT' 40,'WONK' 1;
+  font-size:clamp(200px,30vw,460px); line-height:.66;
+  letter-spacing:.02em;
+  color:color-mix(in srgb, var(--accent-ink) 12%, transparent);
+}
+@supports not (color:color-mix(in srgb, #000 8%, transparent)){
+  .measure__numeral{color:rgba(122,90,34,.11)}
+}
+.measure__eyebrow{grid-column:1 / -1}
+.measure__h{
+  grid-column:1 / 9; margin:0;
+  font-size:var(--t-96); max-width:15ch;
+  font-variation-settings:'opsz' 144,'wght' 318,'SOFT' 28,'WONK' 1;
+  letter-spacing:var(--tr-display); line-height:.96;
+}
+.measure__h .q{color:var(--muted)}
+.measure__deck{grid-column:9 / 13; align-self:end; max-width:34ch; color:var(--ink)}
+
+/* --- II.b  the film + the placard ---------------------------------------- */
+.measure__filmrow{
+  margin-top:clamp(52px,7vw,110px);
+  padding:0 var(--gutter);
+  display:grid; grid-template-columns:repeat(12,minmax(0,1fr));
+  column-gap:clamp(18px,2.4vw,40px); align-items:center;
+}
+.measure__film{grid-column:1 / 9; margin:0}
+.measure__filmwin{display:block; overflow:hidden; position:relative}
+.measure__film video{aspect-ratio:16 / 9; object-fit:cover}
+.measure__filmcap{
+  margin-top:clamp(12px,1.2vw,18px);
+  display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;
+  font-size:var(--t-12); letter-spacing:var(--tr-caps); text-transform:uppercase;
+  color:var(--muted); font-weight:500;
+}
+.measure__filmcap b{font-weight:520; color:var(--accent-ink)}
+
+/* the placard — a sheet of glass over the wall, holding a schedule.
+   This is the ONE element that gets a real backdrop-filter. Its backdrop is
+   the static chapter wash, never the video, so the blur is sampled once and
+   costs nothing per frame. The graded background above is what it refracts —
+   without that this would look like a flat translucent rectangle. */
+.measure__brief{
+  grid-column:9 / 13;
+  position:relative; isolation:isolate;
+  /* Two background layers, no pseudo-element: the specular sheen sits over a
+     translucent face whose ALPHA falls across the panel — brightest where the
+     light lands, letting more of the blurred wall through at the far corner.
+     That falling alpha is what reads as a sheet of glass. A first pass painted
+     a white sheen over a flat white face, which is invisible by construction. */
+  background:
+    linear-gradient(152deg,
+      rgba(255,255,255,.34) 0%,
+      rgba(255,255,255,.06) 30%,
+      transparent 52%),
+    linear-gradient(152deg,
+      color-mix(in srgb, #fff 88%, transparent) 0%,
+      color-mix(in srgb, #fff 70%, transparent) 44%,
+      color-mix(in srgb, var(--ground-deep) 66%, transparent) 100%);
+  -webkit-backdrop-filter:blur(18px) saturate(1.08);
+  backdrop-filter:blur(18px) saturate(1.08);
+  border:1px solid var(--glass-edge);
+  padding:clamp(26px,2.7vw,42px) clamp(24px,2.5vw,38px) clamp(22px,2.3vw,34px);
+  box-shadow:var(--glass-thick), var(--sh-float-md);
+}
+/* no backdrop-filter (older Safari/Firefox): fall back to the solid glass face
+   rather than a see-through panel with unreadable type over it */
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .measure__brief{background:var(--glass-face)}
+}
+@supports not (background:color-mix(in srgb, #fff 72%, transparent)){
+  .measure__brief{background:var(--glass-face); border-color:rgba(20,22,26,.09)}
+}
+/* the gold catchlight along the top edge */
+.measure__brief::before{
+  content:''; position:absolute; z-index:2; pointer-events:none;
+  top:0; left:0; right:0; height:1px;
+  background:var(--glass-lip);
+}
+.measure__brief .eyebrow{color:var(--accent-ink); font-weight:560}
+
+.measure__brieflist{margin-top:clamp(17px,1.8vw,24px); counter-reset:brief}
+.measure__brieflist li{
+  counter-increment:brief;
+  padding:13px 0 13px 38px; position:relative;
+  font-size:var(--t-16); color:var(--ink); line-height:1.35;
+}
+/* rules that fade out at both ends instead of butting hard into the padding —
+   a ruled ledger, not a table with borders */
+.measure__brieflist li + li::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,
+    color-mix(in srgb, var(--ink) 15%, transparent) 0%,
+    color-mix(in srgb, var(--ink) 11%, transparent) 62%,
+    transparent 100%);
+}
+@supports not (background:color-mix(in srgb, #000 8%, transparent)){
+  .measure__brieflist li + li::before{background:rgba(20,22,26,.11)}
+}
+.measure__brieflist li:first-child{padding-top:2px}
+.measure__brieflist li:first-child::after{top:3px}
+/* indexed like a schedule of deliverables, not a bullet list. Gold, tabular,
+   and set on the baseline of the line it numbers. */
+.measure__brieflist li::after{
+  content:counter(brief,decimal-leading-zero);
+  position:absolute; left:0; top:14px;
+  font-size:var(--t-12); letter-spacing:.08em;
+  color:var(--accent-ink); font-weight:560;
+  font-feature-settings:'tnum' 1;
+}
+
+/* --- II.c  THE EXHIBITION -------------------------------------------------
+   REHUNG (2026-07-24). The previous hang gave every piece an identical mat, an
+   identical shadow and an identical caption size, in rows of 2 then 3 then 3.
+   That is a contact sheet, not an exhibition: with no scale hierarchy the eye
+   has nowhere to land, and — worse — it set Ankkush's annotated survey plates
+   at the same size as atmospheric photography, which made the plates look like
+   flyers and the photographs look like filler.
+
+   Three deliberate registers now, largest first:
+     .plate--lead   one piece, huge, with its figure set as display type beside it
+     .plate--pair   two pieces at unequal spans
+     .plate--strip  three pieces, small, where fine detail matters less
+   Scale is the whole idea: an annotated plate is only impressive at a size where
+   the measurements can actually be READ. Below about 420px they are decoration.
+
+   The room sits on --ground-deep with a soft directional wash, so a white mat
+   reads as a mounted object rather than a white box on a white page. */
+.measure__room{
+  margin-top:clamp(76px,10vw,150px);
+  padding:clamp(64px,8vw,124px) 0 clamp(72px,9vw,136px);
+  border-top:1px solid var(--hair);
+  border-bottom:1px solid var(--hair);
+  position:relative; isolation:isolate; overflow:hidden;
+  /* the exhibition is a RECESS — a room stepped down off the chapter wall. It
+     is lit like a gallery: a spotlight washes down from the top centre onto the
+     lead plate, and the walls fall away to a deeper warm stone at the edges and
+     floor. Deeper than .ch-measure (built on --ground-deep, not --ground) so the
+     eye reads it as a distinct, quieter space — but still light, never a dark
+     panel. Same warm/cool play as the chapter, one tonal step lower. */
+  background:
+    radial-gradient(96% 62% at 50% -4%,
+      color-mix(in oklab, var(--ground-deep), #fff 52%) 0%, transparent 50%),
+    radial-gradient(120% 78% at 50% 106%,
+      color-mix(in srgb, var(--stop-d4) 52%, transparent) 0%, transparent 62%),
+    radial-gradient(140% 128% at 50% 42%,
+      transparent 48%,
+      color-mix(in oklab, var(--ground-deep), var(--stop-d4) 82%) 100%),
+    color-mix(in oklab, var(--ground-deep), var(--ground) 8%);
+}
+@supports not (background:color-mix(in srgb, #000 3%, #fff)){
+  .measure__room{background:#EEEADE}
+}
+.measure__lead{
+  margin:0 var(--gutter) clamp(44px,5.5vw,78px);
+  max-width:38ch; position:relative; z-index:1;
+}
+
+/* --- the plate primitive -------------------------------------------------
+   An even mat on all four sides, with the label OUTSIDE it under a gold
+   hairline — the museum convention of a card mounted below the frame. The
+   previous mat was bottom-weighted, which is authentic on its own, but with
+   the caption sitting outside it just read as a stray gap. */
+.plate{margin:0; position:relative; z-index:1}
+/* Same glass as the film bevel and the placard — one material across the whole
+   chapter. The mat stays a little deeper than the film's because on a mounted
+   photograph the mat IS the museum language; on a video it was just a border. */
+.plate__mat{
+  display:block; margin:0; position:relative;
+  background:var(--glass-face);
+  padding:clamp(8px,.85vw,15px);
+  border:1px solid var(--glass-edge);
+  transition:transform .8s var(--dolly), box-shadow .8s var(--dolly);
+}
+@supports not (border-color:color-mix(in srgb, #000 8%, transparent)){
+  .plate__mat{border-color:rgba(20,22,26,.08)}
+}
+.plate__mat::before{
+  content:''; position:absolute; z-index:2; pointer-events:none;
+  top:0; left:0; right:0; height:1px;
+  background:var(--glass-lip);
+}
+/* The window is a separate element from the mat ON PURPOSE. data-unmask sets
+   clip-path, and clip-path clips the element's OWN box-shadow — put it on the
+   mat and the plate loses the layered shadow that makes it read as a physical
+   object hanging off the wall. Shadow and parallax live on the mat; the clip
+   and the hard overflow clip live on the window inside it. */
+.plate__win{
+  display:block; overflow:hidden; position:relative;
+  border:1px solid rgba(20,22,26,.10);
+  background:var(--ground-deep);   /* tone to load against, never white */
+}
+.plate__win img{
+  width:100%; height:auto; display:block;
+  aspect-ratio:3 / 2; object-fit:cover;   /* native ratio of the source aerials */
+}
+/* the seat — a soft shadow cast by the mat opening onto the top of the print,
+   so the image sits INTO the frame rather than flush on its surface. This is
+   the single most "framed" cue a mount has. Kept to the top edge and very soft
+   so it never dims a top-row annotation label. Painted above the image (::after,
+   positioned) but below the mat's gold lip. */
+.plate__win::after,
+.measure__filmwin::after{
+  content:''; position:absolute; inset:0; z-index:1; pointer-events:none;
+  box-shadow:inset 0 4px 12px -6px rgba(20,22,26,.30),
+             inset 0 0 0 1px rgba(255,255,255,.045);
+}
+/* cinematic hold: the print eases into a slow push-in on hover, the window
+   clipping the overscan. Motion only — the annotation never distorts because
+   the whole frame scales as one. Never on the film (its own selector). */
+@media (hover:hover) and (pointer:fine){
+  .plate__win img{transition:transform 1.3s var(--dolly)}
+  .plate__mat:hover .plate__win img{transform:scale(1.045)}
+}
+
+/* the label — a ruled ledger, figure first */
+.plate__label{
+  margin-top:clamp(13px,1.2vw,19px);
+  padding-top:clamp(11px,1vw,15px);
+  border-top:1px solid color-mix(in srgb, var(--gold) 55%, transparent);
+}
+@supports not (border-color:color-mix(in srgb, #000 8%, transparent)){
+  .plate__label{border-top-color:rgba(194,160,74,.55)}
+}
+.plate__fig{
+  display:block; margin:0;
+  font-family:Fraunces, Georgia, serif;
+  font-variation-settings:'opsz' 60,'wght' 340,'SOFT' 14,'WONK' 0;
+  font-size:var(--t-24); line-height:1.04; letter-spacing:var(--tr-head);
+  color:var(--ink); font-feature-settings:'tnum' 1;
+}
+.plate__where,
+.plate__what{
+  display:block; margin:5px 0 0;
+  font-size:11px; letter-spacing:.15em; text-transform:uppercase;
+  font-weight:500; line-height:1.5;
+}
+.plate__where{color:var(--accent-ink); margin-top:7px}
+.plate__what{color:var(--muted)}
+
+/* --- shadow tiers — depth tracks size, which is what sells "physical" ---- */
+/* every tier carries the same inset thickness pair — only the float changes */
+.plate--strip .plate__mat{box-shadow:var(--glass-thick), var(--sh-float-sm)}
+.plate--pair  .plate__mat{box-shadow:var(--glass-thick), var(--sh-float-md)}
+.plate--lead  .plate__mat{box-shadow:var(--glass-thick), var(--sh-float-lg)}
+@media (hover:hover) and (pointer:fine){
+  .plate__mat:hover{transform:translateY(-6px)}
+  .plate--strip .plate__mat:hover{box-shadow:var(--glass-thick), var(--sh-float-md)}
+  .plate--pair  .plate__mat:hover{box-shadow:var(--glass-thick), var(--sh-float-lg)}
+  .plate--lead  .plate__mat:hover{
+    box-shadow:var(--glass-thick),
+      0 3px 3px rgba(28,25,20,.045), 0 20px 40px rgba(28,25,20,.07),
+      0 60px 124px rgba(28,25,20,.115);
+  }
+}
+
+/* --- register 1: the lead exhibit ----------------------------------------
+   The figure leaves the photograph. Setting "2.27 ha" in Fraunces at display
+   scale beside the plate is what turns a photo grid into an exhibition
+   catalogue — and it means the page carries the measurement as type a crawler
+   and a screen reader can both read, not only as baked pixels. */
+.measure__leadrow{
+  margin:0 var(--gutter);
+  display:grid; grid-template-columns:repeat(12,minmax(0,1fr));
+  column-gap:clamp(18px,2.4vw,40px); align-items:center;
+  position:relative; z-index:1;
+}
+.plate--lead{grid-column:1 / 9}
+.measure__leadnote{grid-column:9 / 13}
+.measure__leadfig{
+  margin:0;
+  font-family:Fraunces, Georgia, serif;
+  font-variation-settings:'opsz' 90,'wght' 300,'SOFT' 20,'WONK' 1;
+  font-size:var(--t-72); line-height:.94; letter-spacing:var(--tr-display);
+  color:var(--ink); font-feature-settings:'tnum' 1;
+}
+.measure__leadfig em{
+  font-style:italic; color:var(--accent-ink);
+  font-variation-settings:'opsz' 90,'wght' 320;
+}
+.measure__leadwhere{
+  margin:clamp(12px,1.2vw,18px) 0 0;
+  font-size:11px; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--accent-ink); font-weight:520; line-height:1.5;
+}
+.measure__leadbody{
+  margin:clamp(14px,1.4vw,20px) 0 0; max-width:30ch;
+  font-size:var(--t-16); color:var(--ink); line-height:1.5;
+}
+/* the lead plate's own label is redundant beside the display figure */
+.plate--lead .plate__label{
+  display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap;
+}
+.plate--lead .plate__fig{
+  font-family:Jost, sans-serif; font-size:11px; font-weight:500;
+  letter-spacing:.15em; text-transform:uppercase; color:var(--muted);
+}
+.plate--lead .plate__where{margin-top:0}
+
+/* --- the wall quote ------------------------------------------------------ */
+.measure__pull{
+  margin:clamp(62px,8vw,116px) auto; padding:clamp(30px,3.4vw,52px) var(--gutter) 0;
+  text-align:center; max-width:24ch;
+  font-family:Fraunces, Georgia, serif;
+  font-variation-settings:'opsz' 96,'wght' 300,'SOFT' 24,'WONK' 1;
+  font-size:var(--t-48); line-height:1.08; letter-spacing:var(--tr-display);
+  color:var(--ink); position:relative; z-index:1;
+}
+/* a short centred gold rule above it — the museum wall-quote mark, the same
+   gold-hairline motif as the ruled eyebrow, closing the loop on the chapter */
+.measure__pull::before{
+  content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:clamp(38px,4vw,60px); height:2px;
+  background:linear-gradient(90deg,
+    transparent, var(--gold) 22%, var(--gold) 78%, transparent);
+}
+@supports not (background:color-mix(in srgb, #000 8%, transparent)){
+  .measure__pull::before{background:var(--gold)}
+}
+.measure__pull em{
+  font-style:italic; color:var(--accent-ink);
+  font-variation-settings:'opsz' 96,'wght' 320;
+}
+
+/* --- register 2: the unequal pair -----------------------------------------
+   7 and 5 columns, not 6 and 6. An even split reads as a spreadsheet; an
+   unequal one reads as a decision. */
+.measure__pairrow{
+  margin:0 var(--gutter);
+  display:grid; grid-template-columns:repeat(12,minmax(0,1fr));
+  column-gap:clamp(16px,2vw,32px); row-gap:clamp(30px,3.6vw,56px);
+  /* bottom-aligned, not top-aligned. Both sources are 3:2, so a 5-column plate
+     is always ~150px shorter than a 7-column one; hanging them from the top
+     leaves a dead notch under the smaller plate and strands the two labels at
+     different heights, which reads as a mistake. Aligned at the foot, the
+     labels line up and the extra height becomes deliberate space above. */
+  align-items:end; position:relative; z-index:1;
+}
+.measure__pairrow .plate--pair:nth-of-type(1){grid-column:1 / 8}
+.measure__pairrow .plate--pair:nth-of-type(2){grid-column:8 / 13}
+
+/* --- the breather — a photograph, unannotated, edge to edge --------------- */
+.measure__breather{
+  margin:clamp(66px,8.5vw,124px) 0; position:relative; z-index:1;
+}
+.measure__breather img{
+  width:100%; height:clamp(280px,46vh,520px); object-fit:cover; display:block;
+}
+.measure__breathercap{
+  margin:13px var(--gutter) 0;
+  font-size:11px; letter-spacing:.15em; text-transform:uppercase;
+  color:var(--muted); font-weight:500;
+}
+
+/* --- register 3: the strip ------------------------------------------------ */
+.measure__striprow{
+  margin:0 var(--gutter);
+  display:grid; grid-template-columns:repeat(12,minmax(0,1fr));
+  column-gap:clamp(16px,2vw,32px); row-gap:clamp(30px,3.6vw,50px);
+  position:relative; z-index:1;
+}
+.measure__striprow .plate--strip{grid-column:span 4}
+.plate--strip .plate__mat{padding:clamp(8px,.8vw,13px)}
+.plate--strip .plate__fig{font-size:var(--t-18)}
+
+/* --- II.d  THE PLANS ------------------------------------------------------
+   Drawn line-work, not photography — so the rules change: the window is WHITE
+   (a plan lives on paper, and --ground-deep muddies its fills), the image is
+   `contain` not `cover` (cropping a dimensioned plan destroys the thing that
+   makes it a plan), and it takes NO seat shadow, which would read as a smudge
+   across the linework. Everything else — mat, gold lip, float — is shared. */
+.measure__plans{
+  margin:clamp(66px,8.5vw,124px) var(--gutter) 0;
+  position:relative; z-index:1;
+}
+.measure__plansnote{
+  margin:clamp(16px,1.8vw,26px) 0 clamp(34px,4vw,56px); max-width:34ch;
+  font-family:Fraunces, Georgia, serif;
+  font-variation-settings:'opsz' 72,'wght' 328,'SOFT' 18,'WONK' 1;
+  font-size:var(--t-32); line-height:1.16; color:var(--ink); letter-spacing:var(--tr-head);
+}
+.measure__plansnote em{font-style:italic; color:var(--accent-ink)}
+.measure__plangrid{
+  display:grid; grid-template-columns:repeat(2,minmax(0,1fr));
+  column-gap:clamp(16px,2vw,32px); row-gap:clamp(30px,3.6vw,50px);
+  align-items:start;
+}
+.plate--plan .plate__mat{box-shadow:var(--glass-thick), var(--sh-float-md)}
+/* The two plans have very different native ratios (a portrait tenancy plan at
+   0.79, a landscape whole-floor plan at 1.41). Forcing one aspect on both either
+   crops a dimensioned drawing or strands huge empty bars. Instead: one FIXED
+   HEIGHT for both, `contain` inside it. Rows stay level, and every plan is
+   shown whole — which for a measured drawing is the entire point. */
+.plate__win--plan{
+  background:#fff;
+  display:grid; place-items:center;
+  aspect-ratio:auto;
+  height:clamp(300px,32vw,440px);
+}
+.plate__win--plan img{
+  width:100%; height:100%; aspect-ratio:auto;
+  object-fit:contain;            /* never crop a dimensioned drawing */
+  padding:clamp(6px,.8vw,14px); box-sizing:border-box;
+}
+.plate__win--plan::after{content:none}   /* no photographic seat shadow */
+@media (hover:hover) and (pointer:fine){
+  .plate--plan .plate__mat:hover .plate__win img{transform:none} /* no push-in */
+}
+
+/* --- RESPONSIVE ---------------------------------------------------------- */
+@media (max-width:860px){
+  .measure__plangrid{grid-template-columns:1fr}
+  .measure__plansnote{font-size:var(--t-24); max-width:46ch}
+}
+@media (max-width:1040px){
+  .measure__h{grid-column:1 / -1; font-size:var(--t-72)}
+  .measure__deck{grid-column:1 / -1; max-width:52ch}
+  .measure__filmrow{display:block}
+  .measure__film{margin-bottom:clamp(26px,4vw,44px)}
+  .measure__brief{padding:clamp(20px,3.4vw,30px)}
+  /* the numeral is a desktop-spread device — it lives in the open right column.
+     Once the layout stacks to one column there is no empty space for it to sit
+     in without crowding the headline, so it drops out. */
+  .measure__numeral{display:none}
+
+  /* the lead exhibit stacks: plate first, then its figure — the display
+     number stays large, it just moves under the piece it describes */
+  .measure__leadrow{display:block}
+  .measure__leadnote{margin-top:clamp(26px,4vw,44px)}
+  .measure__leadfig{font-size:var(--t-60)}
+  .measure__leadbody{max-width:46ch}
+
+  .measure__pairrow .plate--pair:nth-of-type(1),
+  .measure__pairrow .plate--pair:nth-of-type(2){grid-column:1 / -1; margin-top:0}
+
+  /* a three-up strip at this width puts each plate near 300px, well under the
+     size at which an annotated measurement is legible. Two up instead. */
+  .measure__striprow .plate--strip{grid-column:span 6}
+  .measure__striprow .plate--strip:last-child{grid-column:1 / -1}
+}
+@media (max-width:720px){
+  .measure__striprow .plate--strip,
+  .measure__striprow .plate--strip:last-child{grid-column:1 / -1}
+  .measure__pull{font-size:var(--t-32); max-width:20ch; margin:clamp(46px,9vw,70px) auto}
+  .measure__leadfig{font-size:var(--t-48)}
+  /* parallax off on touch — it fights momentum scrolling and causes jitter */
+  .plate__mat[data-parallax], .measure__film[data-parallax]{transform:none !important}
+  .plate__mat{
+    padding:clamp(8px,2vw,13px);
+    box-shadow:0 1px 1px rgba(28,25,20,.035), 0 6px 18px rgba(28,25,20,.06) !important;
+  }
+  .plate--lead .plate__label{display:block}
+  .plate--lead .plate__where{margin-top:5px}
+  .frameplate{
+    padding:clamp(8px,2vw,12px);
+    box-shadow:0 1px 1px rgba(28,25,20,.035), 0 6px 18px rgba(28,25,20,.06);
+  }
+}

@@ -1,0 +1,363 @@
+/* ============================================================================
+   CHAPTER V — THE CLOSE                                  light: Golden (.82→1.0)
+
+   The payoff. Chapter I opened in fog before sunrise; Chapter V closes with the
+   sun risen over that same fog sea — the light journey completes on one
+   landscape. Then it converts: sectors, the agencies who trust the work, a
+   contact line, and a hero-scale sign-off where COMMERCIAL is finally allowed
+   to be big (the one place the sub-brand goes large — settled in NEXT.md §2b).
+   ========================================================================= */
+
+.ch-close{
+  position:relative; isolation:isolate; overflow:hidden;
+  background:
+    radial-gradient(120% 84% at 28% -6%,
+      color-mix(in oklab, var(--ground), #fff 52%) 0%, transparent 46%),
+    radial-gradient(100% 86% at 88% 58%,
+      color-mix(in srgb, var(--stop-4) 82%, transparent) 0%, transparent 60%),
+    linear-gradient(176deg,
+      color-mix(in oklab, var(--ground), #fff 14%) 0%,
+      color-mix(in oklab, var(--ground) 34%, var(--ground-deep)) 100%);
+}
+@supports not (background:color-mix(in srgb, #000 3%, #fff)){
+  .ch-close{background:var(--ground)}
+}
+
+/* --- V.a  the golden vista — a full-bleed bookend of Chapter I ----------- */
+.close__hero{
+  position:relative; min-height:clamp(560px,86vh,900px);
+  display:grid; align-content:center;
+  padding:clamp(90px,13vh,160px) var(--gutter);
+  isolation:isolate;
+}
+.close__hero .close__media{
+  position:absolute; inset:0; z-index:-2; overflow:hidden;
+}
+.close__hero .close__media img{width:100%; height:100%; object-fit:cover; display:block}
+/* a light warm veil, strongest at the upper-left where the type sits, so dark
+   ink clears AA over the bright sky without hiding the sunrise. Verified with
+   the frame-by-frame contrast harness, as Chapter I was. */
+.close__hero::before{
+  content:''; position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:linear-gradient(105deg,
+    color-mix(in srgb, var(--ground) 82%, transparent) 0%,
+    color-mix(in srgb, var(--ground) 44%, transparent) 34%,
+    transparent 62%);
+}
+.close__numeral{
+  position:absolute; z-index:-1; pointer-events:none; user-select:none;
+  top:clamp(-30px,-2vw,-6px); right:calc(var(--gutter) - .06em);
+  margin:0; font-family:Fraunces, Georgia, serif;
+  font-variation-settings:'opsz' 144,'wght' 260,'SOFT' 40,'WONK' 1;
+  font-size:clamp(200px,30vw,460px); line-height:.66; letter-spacing:.02em;
+  color:color-mix(in srgb, var(--accent-ink) 14%, transparent);
+}
+@supports not (color:color-mix(in srgb, #000 8%, transparent)){
+  .close__numeral{color:rgba(122,90,34,.13)}
+}
+.close__lead{max-width:20ch; position:relative; z-index:1}
+.close__eyebrow{margin:0 0 clamp(16px,1.8vw,26px)}
+.close__h{
+  margin:0; font-size:var(--t-120);
+  font-variation-settings:'opsz' 144,'wght' 316,'SOFT' 28,'WONK' 1;
+  letter-spacing:var(--tr-display); line-height:.94; color:var(--ink);
+}
+.close__h .em-gold{font-style:italic}
+.close__sub{
+  margin:clamp(22px,2.4vw,36px) 0 0; max-width:40ch;
+  font-size:var(--t-18); line-height:1.5; color:var(--ink);
+}
+
+/* --- V.b  sectors — folded in, keyword-rich, quiet ---------------------- */
+.close__sectors{
+  padding:clamp(72px,9vw,140px) var(--gutter) clamp(20px,3vw,40px);
+  position:relative; z-index:1;
+}
+.close__sectors .eyebrow{margin:0 0 clamp(14px,1.6vw,22px)}
+/* the capability heading — same display voice as every other chapter, so the
+   sector grid reads as a chapter beat rather than a bolted-on services list */
+.close__secth{
+  margin:0 0 clamp(34px,4vw,58px); max-width:18ch;
+  font-size:var(--t-72);
+  font-variation-settings:'opsz' 144,'wght' 318,'SOFT' 28,'WONK' 1;
+  letter-spacing:var(--tr-display); line-height:.98; color:var(--ink);
+}
+.close__secth .em-gold{font-style:italic}
+.close__grid{
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:1px; background:var(--hair);
+  border-top:1px solid var(--hair); border-bottom:1px solid var(--hair);
+}
+.close__cell{
+  background:var(--ground); padding:clamp(22px,2.6vw,40px) clamp(18px,2vw,30px);
+  display:flex; flex-direction:column; gap:8px; min-height:clamp(150px,17vw,210px);
+}
+.close__cell h3{
+  margin:0; font-family:Fraunces, Georgia, serif;
+  font-variation-settings:'opsz' 60,'wght' 336,'SOFT' 14,'WONK' 0;
+  font-size:var(--t-24); line-height:1.05; color:var(--ink); letter-spacing:var(--tr-head);
+}
+.close__cell p{
+  margin:auto 0 0; font-size:var(--t-14); line-height:1.5; color:var(--muted);
+}
+.close__cell .close__cellnum{
+  font-size:11px; letter-spacing:var(--tr-caps); text-transform:uppercase;
+  color:var(--accent-ink); font-weight:560;
+}
+/* the sector icon — 24px line art, one stroke weight, sitting above the index
+   number. Gold at rest so the six read as a set; it deepens to accent-ink on
+   hover of the cell, the same "lift" language as the plates. */
+.close__icon{
+  width:clamp(26px,2.2vw,32px); height:clamp(26px,2.2vw,32px);
+  display:block; margin:0 0 clamp(14px,1.5vw,20px);
+  color:var(--gold); flex:0 0 auto;
+  transition:color .5s var(--dolly), transform .6s var(--dolly);
+}
+.close__cell{transition:background .5s var(--dolly)}
+@media (hover:hover) and (pointer:fine){
+  .close__cell:hover{background:color-mix(in oklab, var(--ground), #fff 45%)}
+  .close__cell:hover .close__icon{color:var(--accent-ink); transform:translateY(-2px)}
+}
+@supports not (background:color-mix(in oklab, #000, #fff 50%)){
+  .close__cell:hover{background:#FBFAF6}
+}
+
+/* --- V.c  the client marquee — real agencies, scrolling ----------------- */
+.close__clients{padding:clamp(56px,7vw,110px) 0 clamp(56px,7vw,110px); position:relative; z-index:1}
+.close__clients .eyebrow{margin:0 var(--gutter) clamp(26px,3vw,40px); text-align:center}
+.marquee{
+  position:relative; overflow:hidden;
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+}
+.marquee__track{
+  display:flex; width:max-content; align-items:center; gap:clamp(42px,5.5vw,92px);
+  animation:marquee 56s linear infinite; will-change:transform;
+}
+/* real client logos, normalised to one ink monochrome and one height, held at a
+   quiet opacity so the strip reads as one calm band rather than a jumble of
+   brands. They lift to full on hover of the strip. */
+.marquee__track img{
+  flex:0 0 auto; height:clamp(26px,3.4vw,40px); width:auto; display:block;
+  opacity:.5; transition:opacity .5s var(--dolly);
+  -webkit-user-drag:none; user-select:none;
+}
+@media (hover:hover){
+  .marquee:hover .marquee__track{animation-play-state:paused}
+  .marquee:hover .marquee__track img{opacity:.72}
+}
+@keyframes marquee{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){
+  .marquee__track{animation:none; justify-content:center; flex-wrap:wrap; width:auto; gap:clamp(26px,3.4vw,54px)}
+  .marquee__track img{opacity:.6}
+  .marquee{mask-image:none; -webkit-mask-image:none}
+}
+
+/* --- V.c-bis  genuine testimonials — adapted from the residential pullquote,
+   re-skinned to the commercial glass + gold. Real reviews only. --------- */
+.close__quotes{
+  padding:clamp(20px,3vw,44px) var(--gutter) clamp(64px,8vw,120px);
+  position:relative; z-index:1;
+}
+.close__quotes .eyebrow{margin:0 0 clamp(30px,3.6vw,52px); text-align:center}
+.quotes-grid{
+  display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(18px,2vw,28px); max-width:1320px; margin:0 auto;
+  align-items:start;
+}
+.pullquote{
+  position:relative; display:flex; flex-direction:column; margin:0;
+  background:var(--glass-face); border:1px solid var(--glass-edge);
+  padding:clamp(30px,3.4vw,50px) clamp(28px,3.2vw,46px) clamp(26px,3vw,40px);
+  box-shadow:var(--glass-thick), var(--sh-float-md);
+  overflow:hidden; transition:transform .6s var(--dolly), box-shadow .6s var(--dolly);
+}
+.pullquote::before{  /* the gold catchlight, as on every glass panel */
+  content:''; position:absolute; inset:0 0 auto; height:1px; background:var(--glass-lip);
+}
+@media (hover:hover){
+  .pullquote:hover{transform:translateY(-6px); box-shadow:var(--glass-thick), var(--sh-float-lg)}
+}
+.quote-stars{display:flex; gap:5px; margin-bottom:18px; color:var(--gold)}
+.quote-stars svg{width:17px; height:17px; display:block}
+.quote-glyph{
+  position:absolute; top:2px; right:24px; font-family:Fraunces, Georgia, serif;
+  font-weight:600; font-size:8rem; line-height:1; color:var(--gold);
+  opacity:.14; user-select:none; pointer-events:none;
+}
+.pullquote blockquote{
+  margin:0; font-family:Fraunces, Georgia, serif; font-style:italic;
+  font-variation-settings:'opsz' 40,'wght' 400,'SOFT' 16,'WONK' 0;
+  font-size:clamp(1.06rem,1.5vw,1.32rem); line-height:1.6; color:var(--ink);
+}
+.pullquote blockquote p{margin:0}
+.pullquote figcaption{
+  margin-top:clamp(22px,2.4vw,30px); padding-top:clamp(16px,1.8vw,22px);
+  border-top:1px solid var(--hair);
+  font-size:11px; font-weight:500; letter-spacing:var(--tr-caps); text-transform:uppercase;
+  color:var(--muted);
+}
+.pullquote figcaption strong{
+  display:block; color:var(--accent-ink); font-weight:560;
+  letter-spacing:.14em; font-size:12px; margin-bottom:5px;
+}
+
+/* --- V.d  the contact call ---------------------------------------------- */
+.close__cta{
+  padding:clamp(72px,9vw,150px) var(--gutter) clamp(80px,10vw,150px);
+  position:relative; z-index:1; text-align:center;
+  border-top:1px solid var(--hair);
+}
+.close__cta .eyebrow{margin:0 0 clamp(20px,2.2vw,32px)}
+.close__ctah{
+  margin:0 auto; max-width:18ch;
+  font-size:var(--t-72);
+  font-variation-settings:'opsz' 144,'wght' 320,'SOFT' 26,'WONK' 1;
+  letter-spacing:var(--tr-display); line-height:.98; color:var(--ink);
+}
+.close__ctah .em-gold{font-style:italic}
+.close__actions{
+  margin:clamp(34px,4vw,56px) 0 0;
+  display:flex; justify-content:center; gap:clamp(14px,1.6vw,24px); flex-wrap:wrap;
+}
+.btn{
+  display:inline-flex; align-items:center; gap:10px;
+  padding:clamp(14px,1.2vw,18px) clamp(24px,2.4vw,38px);
+  font-size:var(--t-14); letter-spacing:.02em; font-weight:500;
+  text-decoration:none; transition:transform .5s var(--dolly), box-shadow .5s var(--dolly), background .3s;
+}
+.btn--primary{
+  background:var(--ink); color:var(--ground);
+  box-shadow:var(--sh-float-md);
+}
+.btn--ghost{
+  background:transparent; color:var(--ink);
+  border:1px solid var(--hair-strong);
+}
+@media (hover:hover){
+  .btn--primary:hover{transform:translateY(-3px); box-shadow:var(--sh-float-lg)}
+  .btn--ghost:hover{border-color:var(--ink); transform:translateY(-3px)}
+}
+
+/* --- V.e  the sign-off footer ------------------------------------------- */
+/* ESPRESSO SIGN-OFF — deliberately the one dark surface on the site.
+   The chapters are a light journey and stay light; the footer is night falling
+   after it, which both closes the arc and matches the residential site's footer
+   so the two brands read as one studio. Its own light tokens (--fink/--fmuted/
+   --fline) are declared locally so nothing in the --sun system has to know a
+   dark surface exists. */
+.site-footer{
+  position:relative; z-index:1;
+  --fink:#F4EFE6;
+  --fmuted:rgba(244,239,230,.56);
+  --fline:rgba(244,239,230,.15);
+  background:radial-gradient(130% 150% at 50% 0%, #2B261D 0%, #211D16 58%, #1C1813 100%);
+  color:var(--fink);
+  padding:clamp(72px,9vw,124px) var(--gutter) clamp(34px,4vw,54px);
+  overflow:hidden;
+}
+.site-footer::before{        /* the gold hairline, luminous on the dark ground */
+  content:''; position:absolute; inset:0 0 auto; height:1px;
+  background:linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+/* the hero-scale sign-off: SIXTH VISION set large, COMMERCIAL larger still and
+   in full ink — the one moment the sub-brand is allowed to dominate */
+.signoff{margin:0 0 clamp(48px,6vw,90px)}
+.signoff__mark{
+  display:block; width:min(46vw,560px); height:auto; color:var(--fink);
+}
+/* COMMERCIAL is the sign-off. Flat cream made it read as plain caption text at
+   this scale, so it now carries a champagne gradient — cream at the top edge
+   falling to the brand gold — which catches like gilt lettering on a dark wall.
+   background-clip:text, with a solid gold fallback for anything that can't. */
+.signoff__big{
+  display:block; margin:clamp(6px,.8vw,14px) 0 0;
+  font-family:Jost, system-ui, sans-serif; font-weight:500;
+  font-size:clamp(46px,11.6vw,178px); line-height:.9;
+  letter-spacing:.02em; text-transform:uppercase;
+  color:var(--gold-soft, #E9D6A8);
+}
+@supports (background-clip:text) or (-webkit-background-clip:text){
+  .signoff__big{
+    background:linear-gradient(168deg,
+      #F6EEDC 0%,
+      #E4CE94 38%,
+      #C8A353 68%,
+      #A8801F 100%);
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent; color:transparent;
+  }
+}
+/* the wordmark above stays cream so the gilt line is the one that sings */
+.signoff__mark{opacity:.92}
+.footer__cols{
+  display:grid; grid-template-columns:2fr 1fr 1fr;
+  gap:clamp(28px,4vw,64px); align-items:start;
+  border-top:1px solid var(--fline); padding-top:clamp(34px,4vw,56px);
+}
+.footer__cols h3, .footer__cols .footer__label{
+  margin:0 0 clamp(14px,1.4vw,20px);
+  font-size:11px; letter-spacing:var(--tr-caps); text-transform:uppercase;
+  color:var(--gold); font-weight:560;
+}
+.footer__cols a{color:var(--fink); text-decoration:none; transition:color .3s var(--dolly)}
+.footer__cols a:hover{color:var(--gold)}
+.footer__contact p{margin:0 0 6px; font-size:var(--t-16); line-height:1.5}
+.footer__contact .footer__blurb{
+  margin:clamp(14px,1.6vw,22px) 0 0; max-width:38ch;
+  color:var(--fmuted); font-size:var(--t-14);
+}
+.footer__list{display:flex; flex-direction:column; gap:9px; font-size:var(--t-14)}
+.footer__legal{
+  margin:clamp(48px,6vw,84px) 0 0; padding-top:clamp(20px,2.4vw,30px);
+  border-top:1px solid var(--fline);
+  display:flex; justify-content:space-between; gap:18px; flex-wrap:wrap;
+  font-size:11px; letter-spacing:.04em; color:var(--fmuted);
+}
+.footer__legal a{color:var(--gold); text-decoration:none}
+
+/* --- RESPONSIVE ---------------------------------------------------------- */
+@media (max-width:1040px){
+  .close__numeral{display:none}
+  .close__h{font-size:var(--t-96)}
+  .close__grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .footer__cols{grid-template-columns:1fr 1fr}
+  .footer__contact{grid-column:1 / -1}
+}
+@media (max-width:1180px){
+  .quotes-grid{grid-template-columns:repeat(2,minmax(0,1fr)); max-width:900px}
+  /* with three cards on a two-column grid the last one would sit alone and
+     half-width, which reads as a mistake — let it run the full row instead */
+  .quotes-grid .pullquote:last-child{grid-column:1 / -1}
+}
+@media (max-width:820px){
+  .quotes-grid{grid-template-columns:1fr; max-width:560px}
+  .quotes-grid .pullquote:last-child{grid-column:auto}
+}
+@media (max-width:640px){
+  .close__secth{font-size:var(--t-48)}
+  .close__grid{grid-template-columns:1fr}
+  .close__actions{flex-direction:column; align-items:stretch}
+  .btn{justify-content:center}
+  .footer__cols{grid-template-columns:1fr; gap:clamp(24px,6vw,40px)}
+  .close__ctah{font-size:var(--t-60)}
+}
+
+
+/* --- social circles — the residential site's pattern, on espresso ---------- */
+.social-circles{
+  display:flex; gap:14px; margin:clamp(18px,2vw,26px) 0 0; flex-wrap:wrap;
+}
+.social-circles a{
+  display:grid; place-items:center; width:42px; height:42px; border-radius:50%;
+  border:1px solid var(--fline); color:var(--fink);
+  transition:border-color .35s var(--dolly), color .35s var(--dolly),
+             transform .35s var(--dolly), background .35s var(--dolly);
+}
+.social-circles svg{width:17px; height:17px; display:block}
+@media (hover:hover){
+  .social-circles a:hover{
+    border-color:var(--gold); color:var(--gold);
+    background:rgba(244,239,230,.05); transform:translateY(-3px);
+  }
+}
