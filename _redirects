@@ -56,3 +56,5 @@
 # source like "/?page_id=*" is parsed as "/" and redirects the homepage to
 # itself — an infinite loop (ERR_TOO_MANY_REDIRECTS). Old ?page_id= URLs will
 # simply serve the homepage, which is the desired outcome anyway.
+/wp-content/*                 /           301
+/wp-includes/*                /           301
