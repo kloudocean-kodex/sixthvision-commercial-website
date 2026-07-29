@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sixth Vision Commercial — commercial real estate photographer, Melbourne.
+     One-page site: the canonical entry is "/". The in-page chapter anchors are
+     deliberately NOT listed as separate <url> entries — Google treats fragment
+     URLs as the same document, and listing them dilutes rather than helps. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  <url>
+    <loc>https://sixthvisioncommercial.com.au/</loc>
+    <lastmod>2026-07-29</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+
+    <image:image>
+      <image:loc>https://sixthvisioncommercial.com.au/assets/img/real-work-3-1400.webp</image:loc>
+      <image:title>Industrial real estate photography Melbourne — new industrial units</image:title>
+      <image:caption>Exterior of a row of new Melbourne industrial units with glass frontages and roller doors, photographed by Sixth Vision Commercial.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sixthvisioncommercial.com.au/assets/img/real-work-2-1400.webp</image:loc>
+      <image:title>Industrial real estate photography Melbourne — working warehouse</image:title>
+      <image:caption>High-bay pallet racking inside a working Melbourne warehouse.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sixthvisioncommercial.com.au/assets/img/real-boardroom-1400.webp</image:loc>
+      <image:title>Commercial office fit-out photography Melbourne — boardroom</image:title>
+      <image:caption>Executive boardroom in a Melbourne commercial office fit-out.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sixthvisioncommercial.com.au/assets/img/plate-lara-dusk-1600.webp</image:loc>
+      <image:title>Measured site plan — 2.27 hectare land parcel, Lara</image:title>
+      <image:caption>Aerial site plan with boundary dimensions, delivered to a Melbourne agency.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://sixthvisioncommercial.com.au/assets/img/real-work-5-1400.webp</image:loc>
+      <image:title>Day-to-dusk commercial property photography Melbourne</image:title>
+      <image:caption>Office and warehouse unit photographed at dusk.</image:caption>
+    </image:image>
+  </url>
+</urlset>

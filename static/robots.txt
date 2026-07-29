@@ -1,0 +1,18 @@
+# Sixth Vision Commercial — commercial real estate photographer, Melbourne
+# https://sixthvisioncommercial.com.au/
+
+User-agent: *
+Allow: /
+
+# Nothing here is private; the whole site is one page plus its assets.
+# Explicitly allow the media so Google Images can index the portfolio.
+Allow: /assets/img/
+Allow: /assets/video/
+
+# Housekeeping folders that must never be indexed if they are ever deployed.
+Disallow: /archive-v2/
+Disallow: /archive-25fps/
+Disallow: /archive-unused-assets/
+Disallow: /.claude/
+
+Sitemap: https://sixthvisioncommercial.com.au/sitemap.xml

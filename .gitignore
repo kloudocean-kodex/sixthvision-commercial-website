@@ -6,3 +6,14 @@ lh-*.json
 localhost_*.report.html
 _perftest.*
 archive-unused-assets/
+
+# Python build artefacts
+__pycache__/
+*.pyc
+
+# NOTE: dist/ is deliberately NOT ignored.
+# If you set the Cloudflare Pages build command to `python3 build.py`, dist/ is
+# generated on their builders and committing it is optional. If you leave the
+# build command EMPTY, you must run build.py locally and commit dist/, because
+# that is the directory Pages serves. Either way the output directory setting
+# must be `dist`.
