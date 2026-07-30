@@ -135,7 +135,12 @@
   <div class="chrome__contact">
     <a class="chrome__tel" href="tel:+61474126276">0474 126 276</a>
     <span class="chrome__sep" aria-hidden="true"></span>
-    <a href="mailto:sixthvision.mel@gmail.com">Enquire</a>
+    <!-- Opens the brief form rather than a mailto:. A mailto: is a SILENT
+         dead click on any desktop with no default mail client registered —
+         no error, no feedback, nothing happens. It only ever appeared to work
+         because phones always have a mail app. The address is still published
+         as copyable text in the footer for anyone who does want to email. -->
+    <a href="#brief-modal" data-open-brief>Enquire</a>
   </div>
 </header>
 
@@ -877,7 +882,12 @@
     </h2>
     <div class="close__actions" data-rise style="--d:200ms">
       <a class="btn btn--primary" href="tel:+61474126276">Call 0474 126 276</a>
-      <a class="btn btn--ghost" href="mailto:sixthvision.mel@gmail.com?subject=Commercial%20shoot%20enquiry">Email an enquiry</a>
+      <!-- Same reason as the header: a mailto: here was a silent dead click on
+           any desktop without a mail client, and this is the primary closing
+           CTA — the single worst place on the page to lose a lead. The label
+           stays accurate: the form emails the enquiry through Web3Forms, and
+           unlike a mailto: it is tracked and cannot fail silently. -->
+      <a class="btn btn--ghost" href="#brief-modal" data-open-brief>Email an enquiry</a>
       <a class="btn btn--ghost" href="https://wa.me/61474126276" target="_blank" rel="noopener">WhatsApp</a>
     </div>
   </div>
@@ -930,9 +940,12 @@
         <a href="https://www.facebook.com/sixthvisionmel/" target="_blank" rel="noopener" aria-label="Sixth Vision Commercial on Facebook">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5"/><path d="M15.2 8h-1.4c-1 0-1.6.6-1.6 1.7V11h-1.7v2.3h1.7V19h2.4v-5.7h1.8l.3-2.3h-2.1V9.9c0-.3.2-.5.5-.5h1.3z" fill="currentColor" stroke="none"/></svg>
         </a>
-        <a href="mailto:sixthvision.mel@gmail.com" aria-label="Email Sixth Vision Commercial">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5.5" width="18" height="13" rx="2.5"/><path d="m3.5 7.5 8.5 6 8.5-6"/></svg>
-        </a>
+        <!-- The mail circle was removed. It sat under "Follow", where it did
+             not belong — you do not follow a studio by email — it duplicated
+             the address printed as copyable text in the Studio column beside
+             it, and as a mailto: it was a silent dead click on any desktop
+             with no mail client. WhatsApp stays: wa.me opens WhatsApp Web on
+             desktop, so it genuinely works everywhere. -->
       </div>
     </div>
     <div>

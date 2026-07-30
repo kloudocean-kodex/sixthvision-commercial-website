@@ -291,7 +291,9 @@ lastFocused = document.activeElement;
 modal.classList.add('is-open');
 modal.removeAttribute('aria-hidden');
 document.body.style.overflow = 'hidden';
-const firstInput = modal.querySelector('input:not([type="hidden"]), select, textarea, button');
+const firstInput = modal.querySelector(
+'.brief-form__input, .brief-form__select, .brief-form__textarea'
+) || modal.querySelector('.brief-modal__close');
 if (firstInput) firstInput.focus();
 if (typeof window.gtag === 'function') {
 window.gtag('event', 'open_brief_modal', { event_category: 'engagement' });

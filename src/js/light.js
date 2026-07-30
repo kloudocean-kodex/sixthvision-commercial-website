@@ -454,7 +454,16 @@
       modal.classList.add('is-open');
       modal.removeAttribute('aria-hidden');
       document.body.style.overflow = 'hidden';
-      const firstInput = modal.querySelector('input:not([type="hidden"]), select, textarea, button');
+      /* Focus the first REAL field, addressed by class rather than by tag.
+         A generic 'input, select, textarea, button' query matches in DOM
+         order, and two things sit ahead of the name field: the × close
+         button, and the display:none botcheck honeypot. So the modal opened
+         with the close button focused — a keyboard user's first Enter shut
+         the form they had just opened. The close-button fallback is kept so
+         focus can never land outside the modal and break the focus trap. */
+      const firstInput = modal.querySelector(
+        '.brief-form__input, .brief-form__select, .brief-form__textarea'
+      ) || modal.querySelector('.brief-modal__close');
       if (firstInput) firstInput.focus();
       if (typeof window.gtag === 'function') {
         window.gtag('event', 'open_brief_modal', { event_category: 'engagement' });
