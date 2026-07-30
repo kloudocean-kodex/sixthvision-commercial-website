@@ -152,8 +152,18 @@
            poster="assets/img/stock-hero-poster-1600.webp"
            aria-label="Dawn over Melbourne: fog clears to reveal a completed industrial facility">
       <!-- AV1/WebM first: browsers pick the FIRST supported source, and AV1 is
-           25% smaller here. H.264 stays as the universal fallback. -->
-      <source src="assets/video/stock-hero-arrival.webm?v=__HASH_VID__" type="video/webm">
+           25% smaller here. H.264 stays as the universal fallback.
+
+           The FULL codec string is mandatory, not decoration. With a bare
+           type="video/webm" the browser only learns the CONTAINER, so anything
+           that plays WebM/VP9 but NOT AV1 — Safari, every iPhone before the
+           15 Pro, plenty of mid-range Android — selects this source and only
+           then discovers it cannot decode it. A source that was chosen and
+           then failed is NOT retried against the next one, so the video dies
+           as a black box with the MP4 sitting unused right below it.
+           Declaring codecs="av01…" makes canPlayType() answer honestly, so
+           non-AV1 devices skip straight to H.264. -->
+      <source src="assets/video/stock-hero-arrival.webm?v=__HASH_VID__" type='video/webm; codecs="av01.0.08M.08"'>
       <source src="assets/video/stock-hero-arrival.mp4?v=__HASH_VID__" type="video/mp4">
     </video>
 
@@ -239,7 +249,9 @@
                disablepictureinpicture disableremoteplayback
                poster="assets/img/measure-poster-1280.webp"
                aria-label="Aerial survey flight across an industrial logistics facility, annotated with site metrics">
-          <source src="assets/video/ai-measure-loop.webm?v=__HASH_VID__" type="video/webm">
+          <!-- Codec declared for the same reason as the hero above: without it,
+               non-AV1 devices commit to this source and never reach the MP4. -->
+          <source src="assets/video/ai-measure-loop.webm?v=__HASH_VID__" type='video/webm; codecs="av01.0.05M.08"'>
           <source src="assets/video/ai-measure-loop.mp4?v=__HASH_VID__" type="video/mp4">
         </video>
       </div>
@@ -943,16 +955,16 @@
 <script src="assets/js/light.js?v=__HASH_JS__" defer></script>
 
 <!-- ENTERPRISE CRO: FLOATING CTA & COMMERCIAL BRIEF MODAL -->
-<a href="#brief-modal" class="floating-cta" data-open-brief aria-label="Open Commercial Media Brief Request Form">
+<a href="#brief-modal" class="floating-cta" data-open-brief aria-label="Request a Quote — open the commercial media brief form">
   <span class="floating-cta__dot"></span>
-  <span>Commission Coverage</span>
+  <span>Request a Quote</span>
 </a>
 
 <div class="brief-modal" id="brief-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="brief-modal__backdrop"></div>
   <div class="brief-modal__content">
     <button type="button" class="brief-modal__close" aria-label="Close modal">&times;</button>
-    <h3 class="brief-modal__title" id="modal-title">Commission Asset Coverage</h3>
+    <h3 class="brief-modal__title" id="modal-title">Request a Quote</h3>
     <p class="brief-modal__sub">Receive a guaranteed 24-hour commercial coverage brief & site measurement proposal for your Melbourne or Victorian property.</p>
     <form class="brief-form" action="https://api.web3forms.com/submit" method="POST">
       <input type="hidden" name="access_key" value="054de5ac-dd80-4ff7-83eb-f5db45c2e88d">
