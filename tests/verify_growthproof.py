@@ -60,8 +60,11 @@ def main() -> None:
     if success_check < 0 or lead_event < 0 or lead_event <= success_check:
         raise AssertionError("generate_lead must remain after Web3Forms success verification")
 
-    # The GA4 lead event must not read visitor-entered contact fields.
-    lead_block = source_js[lead_event : lead_event + 700]
+    # Inspect exactly the GA4 generate_lead call, not neighbouring UI copy.
+    lead_end = source_js.find("\n          });", lead_event)
+    if lead_end < 0:
+        raise AssertionError("Could not determine the end of the generate_lead GA4 block")
+    lead_block = source_js[lead_event : lead_end + len("\n          });")]
     forbidden = ("brief-name", "brief-email", "name=\"name\"", "agency", "message")
     for token in forbidden:
         if token in lead_block:
