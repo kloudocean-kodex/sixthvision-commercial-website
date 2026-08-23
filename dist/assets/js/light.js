@@ -280,6 +280,32 @@ else if (e.key === 'End') { set(1); e.preventDefault(); }
 });
 set(0.5);
 });
+function gpEvent(name, params) {
+if (typeof window.gtag !== 'function') return;
+window.gtag('event', name, params || {});
+}
+function gpCtaLocation(el) {
+if (el.closest('.chrome')) return 'header';
+if (el.closest('.close__cta')) return 'closing_cta';
+if (el.closest('.site-footer')) return 'footer';
+if (el.closest('.floating-cta')) return 'floating_cta';
+return 'page';
+}
+[
+['a[href^="tel:"]', 'phone_click', 'phone'],
+['a[href^="mailto:"]', 'email_click', 'email'],
+['a[href*="wa.me/"]', 'whatsapp_click', 'whatsapp']
+].forEach(([selector, eventName, channel]) => {
+document.querySelectorAll(selector).forEach(link => {
+link.addEventListener('click', () => {
+gpEvent(eventName, {
+event_category: 'commercial_intent',
+contact_channel: channel,
+cta_location: gpCtaLocation(link)
+});
+});
+});
+});
 const modal = document.querySelector('.brief-modal');
 if (!modal) return;
 const openBtns = document.querySelectorAll('[data-open-brief]');
@@ -322,6 +348,62 @@ else if (!e.shiftKey && document.activeElement === last) { first.focus(); e.prev
 });
 const form = modal.querySelector('form');
 if (!form) return;
+const GP_ATTR_KEY = 'sv_growthproof_first_touch_v1';
+const GP_ATTR_NAMES = [
+'landing_path', 'referrer_path', 'utm_source', 'utm_medium', 'utm_campaign',
+'utm_term', 'utm_content', 'gclid', 'msclkid', 'captured_at',
+'growthproof_measurement_version'
+];
+function gpPathOnly(raw) {
+if (!raw) return '';
+try {
+const u = new URL(raw, location.href);
+return u.origin + u.pathname;
+} catch (err) {
+return '';
+}
+}
+function gpFirstTouch() {
+try {
+const saved = JSON.parse(sessionStorage.getItem(GP_ATTR_KEY) || '{}');
+if (saved && saved.captured_at) return saved;
+} catch (err) {}
+const q = new URLSearchParams(location.search);
+const first = {
+landing_path: gpPathOnly(location.href),
+referrer_path: gpPathOnly(document.referrer),
+utm_source: q.get('utm_source') || '',
+utm_medium: q.get('utm_medium') || '',
+utm_campaign: q.get('utm_campaign') || '',
+utm_term: q.get('utm_term') || '',
+utm_content: q.get('utm_content') || '',
+gclid: q.get('gclid') || '',
+msclkid: q.get('msclkid') || '',
+captured_at: new Date().toISOString(),
+growthproof_measurement_version: 'v1'
+};
+try { sessionStorage.setItem(GP_ATTR_KEY, JSON.stringify(first)); } catch (err) {}
+return first;
+}
+function gpEnsureHidden(name, value) {
+let input = form.querySelector(`input[type="hidden"][name="${name}"]`);
+if (!input) {
+input = document.createElement('input');
+input.type = 'hidden';
+input.name = name;
+form.appendChild(input);
+}
+input.value = value == null ? '' : String(value);
+return input;
+}
+function gpNewLeadId() {
+if (window.crypto && typeof window.crypto.randomUUID === 'function') {
+return window.crypto.randomUUID();
+}
+return `sv-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+}
+const gpAttribution = gpFirstTouch();
+GP_ATTR_NAMES.forEach(name => gpEnsureHidden(name, gpAttribution[name] || ''));
 const status = modal.querySelector('.brief-form__status');
 const btn = form.querySelector('.brief-form__btn');
 const BTN_IDLE = 'Submit Commercial Brief \u2192';
@@ -336,6 +418,9 @@ form.addEventListener('submit', (e) => {
 e.preventDefault();
 if (btn) { btn.disabled = true; btn.textContent = 'Sending brief\u2026'; }
 say('Sending your brief\u2026');
+const leadId = gpNewLeadId();
+gpEnsureHidden('lead_id', leadId);
+gpEnsureHidden('submitted_at', new Date().toISOString());
 fetch('https://api.web3forms.com/submit', {
 method: 'POST',
 body: new FormData(form)
@@ -350,13 +435,13 @@ btn.textContent = 'Brief received \u2014 we will call you';
 btn.style.background = '#4A8C57';
 }
 say('Brief received. We will call you back shortly.');
-if (typeof window.gtag === 'function') {
-window.gtag('event', 'generate_lead', {
+const propertyCategory = form.querySelector('[name="property_category"]');
+gpEvent('generate_lead', {
 event_category: 'conversion',
-event_label: 'Commercial Media Brief',
-value: 1
+form_name: 'commercial_brief',
+lead_id: leadId,
+property_category: propertyCategory ? propertyCategory.value : 'unspecified'
 });
-}
 setTimeout(() => { closeModal(); form.reset(); resetBtn(); say(''); }, 2500);
 })
 .catch(() => {
@@ -366,9 +451,7 @@ btn.textContent = 'Could not send \u2014 call 0474 126 276';
 btn.style.background = '#8C4A4A';
 }
 say('That did not send. Please call 0474 126 276 or email sixthvision.mel@gmail.com and we will pick it up straight away.');
-if (typeof window.gtag === 'function') {
-window.gtag('event', 'brief_submit_failed', { event_category: 'error' });
-}
+gpEvent('brief_submit_failed', { event_category: 'error', lead_id: leadId });
 });
 });
 }
