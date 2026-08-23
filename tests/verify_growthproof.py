@@ -60,18 +60,8 @@ def main() -> None:
     if success_check < 0 or lead_event < 0 or lead_event <= success_check:
         raise AssertionError("generate_lead must remain after Web3Forms success verification")
 
-    # The GA4 event block must not read visitor-entered contact fields.
-    block_match = re.search(
-        r"gpEvent\('generate_lead',[\s\S]{0,700?}\}\);",
-        source_js,
-    )
-    # Python's regex parser does not accept a lazy quantifier on a bounded repeat
-    # in every implementation the same way; fall back to a bounded slice.
-    if block_match:
-        lead_block = block_match.group(0)
-    else:
-        start = source_js.find("gpEvent('generate_lead'")
-        lead_block = source_js[start : start + 700]
+    # The GA4 lead event must not read visitor-entered contact fields.
+    lead_block = source_js[lead_event : lead_event + 700]
     forbidden = ("brief-name", "brief-email", "name=\"name\"", "agency", "message")
     for token in forbidden:
         if token in lead_block:
