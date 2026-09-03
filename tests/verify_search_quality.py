@@ -82,7 +82,17 @@ class PageParser(HTMLParser):
 
 def sitemap_urls(sitemap: Path) -> list[str]:
     root = ET.parse(sitemap).getroot()
-    return [elem.text.strip() for elem in root.iter() if elem.tag.endswith("loc") and elem.text]
+    urls: list[str] = []
+    # Only direct <url><loc> children are page URLs. Image/video/news sitemap
+    # extensions also contain elements named *:loc and must never be audited as HTML.
+    for url_node in root:
+        if not url_node.tag.endswith("url"):
+            continue
+        for child in url_node:
+            if child.tag.endswith("loc") and child.text:
+                urls.append(child.text.strip())
+                break
+    return urls
 
 
 def url_to_file(root: Path, url: str) -> Path:
