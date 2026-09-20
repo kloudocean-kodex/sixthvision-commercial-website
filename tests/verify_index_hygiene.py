@@ -96,6 +96,7 @@ def main() -> int:
             approved = {
                 f"https://{CANONICAL_HOST}/",
                 f"https://{CANONICAL_HOST}/commercial-property-photography-melbourne/",
+                f"https://{CANONICAL_HOST}/work/lara-land-development-site-mapping/",
             }
             unexpected = sorted(set(page_urls) - approved)
             if unexpected:
