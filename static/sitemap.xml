@@ -64,4 +64,15 @@
       <image:caption>2.27 hectare Lara land parcel with boundary dimensions mapped onto a dusk aerial property image.</image:caption>
     </image:image>
   </url>
+  <url>
+    <loc>https://sixthvisioncommercial.com.au/precision-floor-plans/</loc>
+    <lastmod>2026-09-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://sixthvisioncommercial.com.au/assets/img/plan-kipling-1100.webp</image:loc>
+      <image:title>Commercial floor plan Melbourne — showroom and warehouse</image:title>
+      <image:caption>Measured showroom and warehouse floor plan at 7 Kipling Mews, Cremorne.</image:caption>
+    </image:image>
+  </url>
 </urlset>
