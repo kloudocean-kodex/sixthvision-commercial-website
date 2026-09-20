@@ -6,8 +6,8 @@
 # Format: /old-path  /new-path  status
 
 # --- old service pages -> the chapter that now covers them ---
-/real-estate-photography      /#work      301
-/real-estate-photography/     /#work      301
+/real-estate-photography      /commercial-property-photography-melbourne/      301
+/real-estate-photography/     /commercial-property-photography-melbourne/     301
 /commercial-photography       /#work      301
 /commercial-photography/      /#work      301
 /photography                  /#work      301
