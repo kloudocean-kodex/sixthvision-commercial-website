@@ -15,4 +15,8 @@ Disallow: /archive-25fps/
 Disallow: /archive-unused-assets/
 Disallow: /.claude/
 
+# ChatGPT Search discovery — OAI-SearchBot is the crawler OpenAI uses for search inclusion.
+User-agent: OAI-SearchBot
+Allow: /
+
 Sitemap: https://sixthvisioncommercial.com.au/sitemap.xml
