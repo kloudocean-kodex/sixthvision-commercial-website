@@ -90,9 +90,13 @@ def main() -> int:
                 parsed = urlparse(url)
                 if parsed.scheme != "https" or parsed.netloc != CANONICAL_HOST:
                     fail(f"sitemap URL escapes canonical host: {url}", failures)
-            # Until intentionally expanded through reviewed service/sector pages,
-            # the current one-page Commercial architecture has one indexable URL.
-            approved = {f"https://{CANONICAL_HOST}/"}
+            # Explicitly approved indexable surface. New URLs must be added here
+            # only when they have their own canonical page, unique proof/content,
+            # sitemap entry and search-quality review.
+            approved = {
+                f"https://{CANONICAL_HOST}/",
+                f"https://{CANONICAL_HOST}/commercial-property-photography-melbourne/",
+            }
             unexpected = sorted(set(page_urls) - approved)
             if unexpected:
                 fail("unexpected new indexable sitemap URL(s): " + ", ".join(unexpected), failures)
