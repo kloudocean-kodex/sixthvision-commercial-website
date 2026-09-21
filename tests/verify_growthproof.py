@@ -74,8 +74,11 @@ def main() -> None:
     if not re.search(r"assets/js/light\.js\?v=[0-9a-f]{8,}", dist_html):
         raise AssertionError("Built HTML does not contain a content-hashed light.js URL")
 
-    # Legacy WordPress surface stays neutralised without redirecting the homepage.
-    must(redirects, "/wp-login.php", "legacy WP login redirect")
+    # Legacy WordPress surface stays neutralised. Hacked/archive paths must now
+    # fall through to the site's real 404 rather than inheriting homepage equity.
+    for legacy in ("/wp-login.php", "/wp-admin/", "/category/", "/tag/", "/author/", "/wp-content/", "/wp-includes/"):
+        if re.search(r"^" + re.escape(legacy), redirects, re.MULTILINE):
+            raise AssertionError(f"Legacy WordPress path must not redirect: {legacy}")
     if re.search(r"^/\s+/\s+301", redirects, re.MULTILINE):
         raise AssertionError("Root-path redirect loop regression detected")
 

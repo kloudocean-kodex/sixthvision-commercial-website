@@ -26,6 +26,22 @@ FORBIDDEN_PUBLIC_TERMS = (
     "casino bonus",
     "gokken",
     "gambling",
+    "trinocasino",
+    "anabolika",
+)
+
+# Search Console confirmed historical spam/WordPress archive URLs under these
+# surfaces. They must fall through to a genuine not-found response, never 301
+# to the homepage or another indexable commercial page.
+FORBIDDEN_REDIRECT_SOURCES = (
+    "/wp-admin/",
+    "/wp-login.php",
+    "/category/",
+    "/tag/",
+    "/author/",
+    "/feed",
+    "/wp-content/",
+    "/wp-includes/",
 )
 
 
@@ -66,6 +82,21 @@ def main() -> int:
         for term in FORBIDDEN_PUBLIC_TERMS:
             if term in text:
                 fail(f"high-risk spam term {term!r} found in {path.relative_to(DIST)}", failures)
+
+
+    redirects = DIST / "_redirects"
+    if redirects.exists():
+        redirect_text = redirects.read_text(encoding="utf-8", errors="ignore")
+        for source in FORBIDDEN_REDIRECT_SOURCES:
+            for line in redirect_text.splitlines():
+                stripped = line.strip()
+                if not stripped or stripped.startswith("#"):
+                    continue
+                if stripped.startswith(source):
+                    fail(
+                        f"legacy spam/archive surface must 404 instead of redirecting: {stripped}",
+                        failures,
+                    )
 
     sitemap = DIST / "sitemap.xml"
     if not sitemap.exists():
