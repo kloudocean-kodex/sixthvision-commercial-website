@@ -41,20 +41,17 @@
 /services                     /#close     301
 /services/                    /#close     301
 
-# --- WordPress cruft: send to home rather than let it 404 ---
+# --- legacy homepage aliases only ---
+# Keep genuine old homepage aliases, but deliberately DO NOT redirect generic
+# WordPress archives/runtime paths such as /author/*, /category/*, /tag/*,
+# /wp-content/* or /wp-includes/*. Search Console has historical hacked/spam
+# URLs under those surfaces. Letting them resolve as a real 404 is the clean
+# deindexing signal; redirecting irrelevant spam to / can create soft-404 noise
+# and incorrectly associate the homepage with legacy injected content.
 /home                         /           301
 /home/                        /           301
 /index.php                    /           301
-/wp-admin/*                   /           301
-/wp-login.php                 /           301
-/category/*                   /           301
-/tag/*                        /           301
-/author/*                     /           301
-/feed                         /           301
-/feed/                        /           301
-# NOTE: no query-string rules here. Cloudflare Pages matches on PATH only, so a
-# source like "/?page_id=*" is parsed as "/" and redirects the homepage to
-# itself — an infinite loop (ERR_TOO_MANY_REDIRECTS). Old ?page_id= URLs will
-# simply serve the homepage, which is the desired outcome anyway.
-/wp-content/*                 /           301
-/wp-includes/*                /           301
+
+# NOTE: no query-string rules here. Cloudflare Pages matches on PATH only.
+# Unknown legacy query URLs therefore fall through to the static site's normal
+# not-found handling instead of being mass-redirected to the homepage.
