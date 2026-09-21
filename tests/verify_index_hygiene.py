@@ -128,6 +128,7 @@ def main() -> int:
                 f"https://{CANONICAL_HOST}/",
                 f"https://{CANONICAL_HOST}/commercial-property-photography-melbourne/",
                 f"https://{CANONICAL_HOST}/construction-photography-melbourne/",
+                f"https://{CANONICAL_HOST}/precision-floor-plans/",
                 f"https://{CANONICAL_HOST}/work/lara-land-development-site-mapping/",
                 f"https://{CANONICAL_HOST}/work/cremorne-commercial-floor-plan/",
                 f"https://{CANONICAL_HOST}/work/williamstown-industrial-site-mapping/",
