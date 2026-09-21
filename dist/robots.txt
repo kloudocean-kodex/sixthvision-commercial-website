@@ -15,4 +15,19 @@ Disallow: /archive-25fps/
 Disallow: /archive-unused-assets/
 Disallow: /.claude/
 
+# ChatGPT Search discovery — OAI-SearchBot is the crawler OpenAI uses for search inclusion.
+User-agent: OAI-SearchBot
+Allow: /
+
+# Perplexity live/search retrieval. PerplexityBot builds its search index; Perplexity-User supports user-requested retrieval.
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+# Claude live user retrieval. ClaudeBot (training crawler) is intentionally not given a separate override here.
+User-agent: Claude-User
+Allow: /
+
 Sitemap: https://sixthvisioncommercial.com.au/sitemap.xml
