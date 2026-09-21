@@ -20,10 +20,9 @@
 /drone/                       /#light     301
 /aerial                       /#light     301
 /aerial/                      /#light     301
-/floor-plans                  /#measure   301
-/floor-plans/                 /#measure   301
-/precision-floor-plans        /#measure   301
-/precision-floor-plans/       /#measure   301
+/floor-plans                  /precision-floor-plans/   301
+/floor-plans/                 /precision-floor-plans/   301
+/precision-floor-plans        /precision-floor-plans/   301
 
 # --- portfolio / about / contact ---
 /portfolio                    /#work      301
