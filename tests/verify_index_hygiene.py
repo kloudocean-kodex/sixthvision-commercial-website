@@ -28,6 +28,8 @@ FORBIDDEN_PUBLIC_TERMS = (
     "gambling",
     "trinocasino",
     "anabolika",
+    "chijrev6j7bd1mordzor5gar2y",
+    "318 little lonsdale",
 )
 
 # Search Console confirmed historical spam/WordPress archive URLs under these

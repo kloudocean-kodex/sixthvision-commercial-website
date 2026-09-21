@@ -2,7 +2,7 @@
 
 Purpose: keep public claims, local-entity facts, structured data and GrowthProof reporting tied to evidence. This is internal documentation; it is not a source for inventing or inflating public claims.
 
-Last reviewed: 2026-08-30
+Last reviewed: 2026-09-21
 
 ## Verified legal/entity facts
 
@@ -20,14 +20,16 @@ Official verification source used for the legal identity: Australian Business Re
 
 ## Local entity / Google Business Profile risk
 
-Current external business data exposes two records named `Sixth Vision Commercial Photography` with the same phone number but different addresses:
+First-party Google Business Profile data connected on 2026-09-21 resolves the Commercial entity identity:
 
-- Google Place ID `ChIJreV6J7Bd1moR-Dzor5gAR2Y` — 318 Little Lonsdale St, Melbourne VIC 3000
-- Google Place ID `ChIJ2Z_9wQ9N1moR5ODTc2YpIfk` — 5 Limehouse Ave, Wollert VIC 3750
+- **Canonical managed Commercial GBP:** Google Place ID `ChIJ2Z_9wQ9N1moR5ODTc2YpIfk`; connected location `locations/6903859813540401804`; primary category `Advertising Photographer`; current connected review state 10 reviews / 5.0 at verification.
+- **Non-canonical duplicate candidate:** Google Place ID `ChIJreV6J7Bd1moR-Dzor5gAR2Y` — surfaced publicly at 318 Little Lonsdale St, Melbourne VIC 3000 with the same Commercial phone number.
 
-Official ABN Lookup reports the entity's main business location as VIC 3750. Legacy directories also show inconsistent Preston and Rye references.
+The connected canonical GBP currently exposes no public street-address fields through the first-party connector, so the website must continue treating Commercial as service-area/local entity data and must **not** infer a storefront address from third-party or Maps results.
 
-Status: **canonical location unresolved**. Do not hard-code a street address or Google Place URL into website schema until Ankkush confirms which profile(s) are legitimate, staffed/customer-facing, and under his control. See GitHub issue #4.
+Legacy directories also show inconsistent Preston, Rye, CBD and older email/location references. These are citation-cleanup targets, not sources of truth.
+
+Status: **canonical Commercial GBP resolved; duplicate candidate remains external cleanup work**. Only Place ID `ChIJ2Z_9wQ9N1moR5ODTc2YpIfk` may be used if a Google Place identifier is ever added to entity evidence. Never emit the Little Lonsdale Place ID/address into public schema or visible business identity unless first-party ownership/location evidence changes. See GitHub issue #4.
 
 ## First-party operational/experience claims currently published
 
