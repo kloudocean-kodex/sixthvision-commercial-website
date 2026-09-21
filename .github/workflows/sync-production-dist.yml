@@ -42,6 +42,7 @@ jobs:
           test -f dist/robots.txt
           test -f dist/commercial-property-photography-melbourne/index.html
           test -f dist/construction-photography-melbourne/index.html
+          test -f dist/precision-floor-plans/index.html
           test -f dist/work/lara-land-development-site-mapping/index.html
           test -f dist/work/cremorne-commercial-floor-plan/index.html
           test -f dist/work/williamstown-industrial-site-mapping/index.html
