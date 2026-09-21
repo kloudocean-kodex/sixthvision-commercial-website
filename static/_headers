@@ -30,6 +30,13 @@
 /work/*
   Cache-Control: public, max-age=0, must-revalidate
 
+# Extensionless HTML ranking/support routes: always revalidate at the edge.
+/construction-photography-melbourne/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/precision-floor-plans/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /sitemap.xml
   Cache-Control: public, max-age=3600
 
