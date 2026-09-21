@@ -51,6 +51,22 @@ jobs:
           urls = [n.text.strip() for n in root.findall(".//sm:loc", ns) if n.text and n.text.strip()]
           if not urls:
               raise SystemExit("No canonical URLs found in sitemap")
+
+          # Search Console confirmed these old hacked/WordPress URLs. IndexNow
+          # accepts deleted URLs, so re-submit them after they resolve 404 to
+          # accelerate retirement from Bing and participating engines.
+          retired = [
+              "https://sixthvisioncommercial.com.au/a-href-https-trinocasino-com-gr-a/",
+              "https://sixthvisioncommercial.com.au/elevate-your-gaming-experience-with-seamless-98/",
+              "https://sixthvisioncommercial.com.au/embracing-the-thrill-of-risk-taking-becomes/",
+              "https://sixthvisioncommercial.com.au/wie-sich-anabolika-auf-die-gelenkgesundheit-auswirken/",
+              "https://sixthvisioncommercial.com.au/kruis-een-gevaarlijke-wegen-vol-temperaturen-in-de/",
+              "https://sixthvisioncommercial.com.au/author/svcommercial/page/16/",
+              "https://sixthvisioncommercial.com.au/author/svcommercial/page/24/",
+              "https://sixthvisioncommercial.com.au/author/svcommercial/page/25/",
+              "https://sixthvisioncommercial.com.au/category/post/page/7/",
+          ]
+          urls = list(dict.fromkeys(urls + retired))
           payload = {
               "host": host,
               "key": key,
@@ -59,7 +75,7 @@ jobs:
           }
           with open("indexnow-payload.json", "w", encoding="utf-8") as f:
               json.dump(payload, f)
-          print(f"Prepared {len(urls)} canonical URL(s) for IndexNow")
+          print(f"Prepared {len(urls)} current/retired URL(s) for IndexNow")
           PY
 
       - name: Notify IndexNow
