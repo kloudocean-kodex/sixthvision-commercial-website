@@ -22,6 +22,14 @@
 /404.html
   Cache-Control: public, max-age=0, must-revalidate
 
+# Extensionless ranking and proof routes are HTML too; force edge revalidation
+# so a new Pages deployment cannot leave stale route responses behind.
+/commercial-property-photography-melbourne/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/work/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /sitemap.xml
   Cache-Control: public, max-age=3600
 
