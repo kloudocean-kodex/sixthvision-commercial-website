@@ -27,6 +27,29 @@ jobs:
         run: |
           set -euo pipefail
 
+          check_absent() {
+            local url="$1"
+            local forbidden="$2"
+            local body
+            local code
+
+            for attempt in {1..12}; do
+              body="$(mktemp)"
+              code="$(curl -L --connect-timeout 10 --max-time 25 -sS -o "$body" -w '%{http_code}' "$url" || true)"
+              if [[ "$code" == "200" ]] && ! grep -Fqi "$forbidden" "$body"; then
+                echo "PASS $url -> forbidden marker absent: $forbidden"
+                rm -f "$body"
+                return 0
+              fi
+              echo "Attempt $attempt found forbidden marker or bad HTTP for $url; retrying..."
+              rm -f "$body"
+              sleep 15
+            done
+
+            echo "::error::Forbidden entity/spam marker remains on production: $forbidden"
+            return 1
+          }
+
           check_page() {
             local url="$1"
             local expect="$2"
@@ -77,3 +100,10 @@ jobs:
           # Known hacked-index residue must remain retired rather than being
           # redirected into a valid commercial page.
           check_status "https://sixthvisioncommercial.com.au/kruis-een-gevaarlijke-wegen-vol-temperaturen-in-de/" "404"
+
+          # Canonical local-entity integrity: the known duplicate candidate and
+          # hacked-content fingerprints must never leak into valid production HTML.
+          check_absent "https://sixthvisioncommercial.com.au/" "ChIJreV6J7Bd1moR-Dzor5gAR2Y"
+          check_absent "https://sixthvisioncommercial.com.au/" "318 Little Lonsdale"
+          check_absent "https://sixthvisioncommercial.com.au/" "trinocasino"
+          check_absent "https://sixthvisioncommercial.com.au/" "anabolika"
