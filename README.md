@@ -118,3 +118,21 @@ node --check dist/assets/js/light.js
 
 For CSS, the meaningful check is that `dist/assets/css/app.css` still contains
 every rule the previous bundle did. `docs/` records the v255 reconciliation.
+
+## Deployment safety net
+
+The repository now keeps `dist/` synchronized automatically on every non-bot
+push to `main`. GitHub Actions runs `python3 build.py`, verifies the critical
+production routes and index-hygiene tests, and commits the generated `dist/`
+only when it changed.
+
+This does **not** replace the preferred Cloudflare Pages configuration:
+
+- Build command: `python3 build.py`
+- Build output directory: `dist`
+- Root directory: `/`
+
+It is a deployment safety net so Cloudflare can still serve a current `dist/`
+if its build command is temporarily disabled or skipped. If Cloudflare is
+configured to serve the repository root instead of `dist`, fix the Pages
+setting; do not move the production HTML back to the repository root.
