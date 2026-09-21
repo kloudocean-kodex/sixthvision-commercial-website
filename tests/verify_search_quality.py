@@ -112,6 +112,14 @@ def parse_page(path: Path) -> PageParser:
     return parser
 
 
+def verify_commercial_contextual_authority_link(root: Path, failures: list[str]) -> None:
+    home = (root / "index.html").read_text(encoding="utf-8", errors="ignore")
+    target = 'href="/commercial-property-photography-melbourne/"'
+    anchor = "Commercial property photography in Melbourne"
+    hero_end = home.find("</section>")
+    if hero_end == -1 or target not in home[:hero_end] or anchor not in home[:hero_end]:
+        failures.append("commercial contextual authority link missing from homepage hero/deck")
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=".")
@@ -213,6 +221,8 @@ def main() -> int:
                 target_parser = target_page[1] if target_page else parse_page(target_file)
                 if target.fragment not in target_parser.ids:
                     failures.append(f"{source_url}: missing fragment target #{target.fragment} in {target_url}")
+
+    verify_commercial_contextual_authority_link(root, failures)
 
     print(f"Search quality audit: {len(parsed)} indexed page(s), {len(warnings)} warning(s), {len(failures)} failure(s)")
     for item in warnings:
