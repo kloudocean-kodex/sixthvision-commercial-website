@@ -27,6 +27,12 @@
 /commercial-property-photography-melbourne/*
   Cache-Control: public, max-age=0, must-revalidate
 
+/construction-photography-melbourne/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/precision-floor-plans/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /work/*
   Cache-Control: public, max-age=0, must-revalidate
 
