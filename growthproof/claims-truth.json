@@ -1,0 +1,58 @@
+{
+  "reviewed_on": "2026-09-22",
+  "verification_basis": "Business owner attestation from Ankkush plus connected first-party Dropbox archive and delivered-work support where available.",
+  "owner_verified_claims": [
+    {
+      "id": "experience",
+      "value": "10+ years in Melbourne",
+      "required_literals": [
+        "10+",
+        "years in Melbourne"
+      ]
+    },
+    {
+      "id": "commercial_properties",
+      "value": "1,000+ commercial properties",
+      "required_literals": [
+        "1,000+",
+        "commercial properties"
+      ]
+    },
+    {
+      "id": "commercial_photo_turnaround",
+      "value": "24-hour delivery available for commercial photography",
+      "required_literals": [
+        "24-hour delivery is available for commercial photography"
+      ]
+    },
+    {
+      "id": "casa_aerial",
+      "value": "CASA-certified aerial",
+      "required_literals": [
+        "CASA-certified aerial"
+      ]
+    },
+    {
+      "id": "measured_mapping",
+      "value": "Measured site, boundary and amenity mapping",
+      "required_literals": [
+        "site, boundary and amenity mapping"
+      ]
+    },
+    {
+      "id": "commercial_floor_plans",
+      "value": "Commercial floor plans",
+      "required_literals": [
+        "Commercial floor plans"
+      ]
+    }
+  ],
+  "evidence_status": {
+    "experience": "Owner verified; earliest independent historical artifact still worth archiving.",
+    "commercial_properties": "Owner verified; deduplicated lifetime count audit still worth building.",
+    "commercial_photo_turnaround": "Owner verified; sample turnaround distribution can strengthen documentary evidence.",
+    "casa_aerial": "Owner verified; current credential document not yet located in connected Dropbox.",
+    "measured_mapping": "Direct delivered-work evidence exists in public proof pages and Dropbox.",
+    "commercial_floor_plans": "Direct delivered-work evidence exists, including Cremorne."
+  }
+}
