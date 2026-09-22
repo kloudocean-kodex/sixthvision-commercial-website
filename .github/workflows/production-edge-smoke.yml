@@ -101,7 +101,12 @@ jobs:
           check_page "https://sixthvisioncommercial.com.au/commercial-property-photography-melbourne/" "1,000+"
           check_page "https://sixthvisioncommercial.com.au/commercial-property-photography-melbourne/" "CASA"
           check_page "https://sixthvisioncommercial.com.au/commercial-property-photography-melbourne/" "24-hour delivery is available for commercial photography"
-          check_page "https://sixthvisioncommercial.com.au/commercial-property-photography-melbourne/" "CBD decision-makers. Metro-wide property coverage."
+          # The CBD marker is new in this change, so verify it only after the
+          # branch reaches main. Pull-request runs intentionally probe the current
+          # production edge, which cannot contain unmerged content yet.
+          if [[ "${{ github.event_name }}" != "pull_request" ]]; then
+            check_page "https://sixthvisioncommercial.com.au/commercial-property-photography-melbourne/" "CBD decision-makers. Metro-wide property coverage."
+          fi
 
           # Known hacked-index residue must remain retired rather than being
           # redirected into a valid commercial page.
