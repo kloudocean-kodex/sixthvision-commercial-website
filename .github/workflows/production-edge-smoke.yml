@@ -97,6 +97,11 @@ jobs:
           check_page "https://sixthvisioncommercial.com.au/work/lara-land-development-site-mapping/" "Land & Development Site Mapping Lara"
           check_page "https://sixthvisioncommercial.com.au/sitemap.xml" "commercial-property-photography-melbourne"
 
+          # Owner-verified Commercial operating claims must remain visible at the live edge.
+          check_page "https://sixthvisioncommercial.com.au/commercial-property-photography-melbourne/" "1,000+"
+          check_page "https://sixthvisioncommercial.com.au/commercial-property-photography-melbourne/" "CASA"
+          check_page "https://sixthvisioncommercial.com.au/commercial-property-photography-melbourne/" "24-hour delivery is available for commercial photography"
+
           # Known hacked-index residue must remain retired rather than being
           # redirected into a valid commercial page.
           check_status "https://sixthvisioncommercial.com.au/kruis-een-gevaarlijke-wegen-vol-temperaturen-in-de/" "404"
