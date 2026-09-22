@@ -27,7 +27,7 @@ jobs:
           python-version: '3.12'
 
       - name: Compile source and test modules
-        run: python3 -m py_compile build.py tests/verify_growthproof.py tests/verify_search_quality.py tests/verify_index_hygiene.py scripts/summarize_lighthouse.py
+        run: python3 -m py_compile build.py tests/verify_growthproof.py tests/verify_search_quality.py tests/verify_index_hygiene.py tests/verify_claim_truth.py scripts/summarize_lighthouse.py
 
       - name: Build exact deployable output
         run: python3 build.py
@@ -40,6 +40,9 @@ jobs:
 
       - name: Guard against index contamination and legacy CMS reintroduction
         run: python3 tests/verify_index_hygiene.py
+
+      - name: Verify owner-approved Commercial claim truth
+        run: python3 tests/verify_claim_truth.py
 
       - name: Diff hygiene
         run: git diff --check
