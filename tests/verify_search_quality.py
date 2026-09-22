@@ -120,6 +120,22 @@ def verify_commercial_contextual_authority_link(root: Path, failures: list[str])
     if hero_end == -1 or target not in home[:hero_end] or anchor not in home[:hero_end]:
         failures.append("commercial contextual authority link missing from homepage hero/deck")
 
+def verify_cbd_context(root: Path, failures: list[str]) -> None:
+    page = root / "commercial-property-photography-melbourne" / "index.html"
+    if not page.exists():
+        failures.append("commercial property photography page missing for CBD context check")
+        return
+    text = page.read_text(encoding="utf-8", errors="ignore")
+    required = [
+        "CBD decision-makers. Metro-wide property coverage.",
+        "Melbourne CBD and inner-city office, retail, mixed-use and development campaigns",
+        "North, West and South-East",
+    ]
+    for literal in required:
+        if literal not in text:
+            failures.append(f"commercial CBD context missing: {literal}")
+
+
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--root", default=".")
@@ -223,6 +239,7 @@ def main() -> int:
                     failures.append(f"{source_url}: missing fragment target #{target.fragment} in {target_url}")
 
     verify_commercial_contextual_authority_link(root, failures)
+    verify_cbd_context(root, failures)
 
     print(f"Search quality audit: {len(parsed)} indexed page(s), {len(warnings)} warning(s), {len(failures)} failure(s)")
     for item in warnings:
