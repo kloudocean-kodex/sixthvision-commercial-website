@@ -117,7 +117,8 @@ jobs:
           # legitimate page; Google treats a real 404/410 as the permanent
           # removal signal for content with no replacement.
           while IFS= read -r spam_path || [[ -n "$spam_path" ]]; do
-            [[ -z "$spam_path" || "$spam_path" == #* ]] && continue
+            [[ -z "$spam_path" ]] && continue
+            [[ "${spam_path:0:1}" == "#" ]] && continue
             check_status "https://sixthvisioncommercial.com.au${spam_path}" "404"
           done < security/known-hacked-paths.txt
 
