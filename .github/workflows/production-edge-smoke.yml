@@ -108,13 +108,26 @@ jobs:
             check_page "https://sixthvisioncommercial.com.au/commercial-property-photography-melbourne/" "CBD decision-makers. Metro-wide property coverage."
           fi
 
-          # Known hacked-index residue must remain retired rather than being
-          # redirected into a valid commercial page.
-          check_status "https://sixthvisioncommercial.com.au/kruis-een-gevaarlijke-wegen-vol-temperaturen-in-de/" "404"
+          # Every known hacked-index URL must remain a genuine 404. These exact
+          # paths are kept in CI because GrowthProof/Search Console identified
+          # them during the September 2026 cleanup. Do not redirect them into a
+          # legitimate page; Google treats a real 404/410 as the permanent
+          # removal signal for content with no replacement.
+          hacked_urls=(
+            "https://sixthvisioncommercial.com.au/kruis-een-gevaarlijke-wegen-vol-temperaturen-in-de/"
+            "https://sixthvisioncommercial.com.au/pinco-onlayn-kazino-ozbekistonda-hisobni-200/"
+            "https://sixthvisioncommercial.com.au/oyin-olamida-qiziqarli-imkoniyatlar-jumladan/"
+            "https://sixthvisioncommercial.com.au/jedinstvene-strategije-koje-oaravaju-i-vode-do/"
+            "https://sixthvisioncommercial.com.au/a-href-https-trinocasino-com-gr-a/"
+          )
+          for hacked_url in "${hacked_urls[@]}"; do
+            check_status "$hacked_url" "404"
+          done
 
-          # Canonical local-entity integrity: the known duplicate candidate and
-          # hacked-content fingerprints must never leak into valid production HTML.
-          check_absent "https://sixthvisioncommercial.com.au/" "ChIJreV6J7Bd1moR-Dzor5gAR2Y"
-          check_absent "https://sixthvisioncommercial.com.au/" "318 Little Lonsdale"
-          check_absent "https://sixthvisioncommercial.com.au/" "trinocasino"
-          check_absent "https://sixthvisioncommercial.com.au/" "anabolika"
+          # Canonical local-entity integrity and hacked-content fingerprints must
+          # never leak into either valid homepage HTML or the canonical sitemap.
+          for forbidden in             "ChIJreV6J7Bd1moR-Dzor5gAR2Y"             "318 Little Lonsdale"             "trinocasino"             "anabolika"             "pinco-onlayn-kazino"             "oyin-olamida-qiziqarli-imkoniyatlar"             "jedinstvene-strategije-koje-oaravaju-i-vode-do"
+          do
+            check_absent "https://sixthvisioncommercial.com.au/" "$forbidden"
+            check_absent "https://sixthvisioncommercial.com.au/sitemap.xml" "$forbidden"
+          done
