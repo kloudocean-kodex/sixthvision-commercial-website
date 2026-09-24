@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 """Fail CI when Commercial deploy output shows index-contamination indicators.
 
-This is intentionally narrow. It audits only the built public surface and does
-not treat documentation, source comments, or historical redirect notes as
-malicious content. The goal is to prevent an old CMS/spam footprint from being
-reintroduced into the static Cloudflare deployment without creating false
-positives in the repository itself.
+This audits the built public surface and blocks reintroduction of the historic
+WordPress/spam footprint. The exact hacked URLs below came from Search Console
+cleanup evidence in September 2026; keeping them explicit makes the regression
+contract reviewable instead of relying only on generic keyword matching.
 """
 from __future__ import annotations
 
@@ -18,8 +17,8 @@ ROOT = Path(__file__).resolve().parents[1]
 DIST = ROOT / "dist"
 CANONICAL_HOST = "sixthvisioncommercial.com.au"
 
-# These terms are high-signal for the specific legacy-index concern raised in
-# September 2026. Scan only public HTML/JS/CSS, never docs or redirect comments.
+# High-signal fingerprints from the known historic compromise. Scan only public
+# HTML/JS/CSS so documentation and security-test comments do not false-positive.
 FORBIDDEN_PUBLIC_TERMS = (
     "chicken road",
     "online casino",
@@ -28,13 +27,26 @@ FORBIDDEN_PUBLIC_TERMS = (
     "gambling",
     "trinocasino",
     "anabolika",
+    "pinco-onlayn-kazino",
+    "oyin-olamida-qiziqarli-imkoniyatlar",
+    "jedinstvene-strategije-koje-oaravaju-i-vode-do",
     "chijrev6j7bd1mordzor5gar2y",
     "318 little lonsdale",
 )
 
-# Search Console confirmed historical spam/WordPress archive URLs under these
-# surfaces. They must fall through to a genuine not-found response, never 301
-# to the homepage or another indexable commercial page.
+# Search Console / GrowthProof evidence confirmed these hacked URLs. They must
+# remain absent from deploy output, absent from the sitemap and never redirect
+# into a legitimate commercial page.
+KNOWN_SPAM_PATHS = (
+    "/kruis-een-gevaarlijke-wegen-vol-temperaturen-in-de/",
+    "/pinco-onlayn-kazino-ozbekistonda-hisobni-200/",
+    "/oyin-olamida-qiziqarli-imkoniyatlar-jumladan/",
+    "/jedinstvene-strategije-koje-oaravaju-i-vode-do/",
+    "/a-href-https-trinocasino-com-gr-a/",
+)
+
+# Historical WordPress archive/runtime surfaces must also fall through to a
+# genuine not-found response rather than inheriting homepage equity.
 FORBIDDEN_REDIRECT_SOURCES = (
     "/wp-admin/",
     "/wp-login.php",
@@ -44,6 +56,7 @@ FORBIDDEN_REDIRECT_SOURCES = (
     "/feed",
     "/wp-content/",
     "/wp-includes/",
+    *KNOWN_SPAM_PATHS,
 )
 
 
@@ -60,8 +73,8 @@ def main() -> int:
 
     files = [p for p in DIST.rglob("*") if p.is_file()]
 
-    # Current production is a static build. WordPress/PHP runtime files appearing
-    # in deploy output are unexpected and require explicit review.
+    # Production is a static build. WordPress/PHP runtime files or paths are
+    # unexpected and require explicit review.
     for path in files:
         rel = path.relative_to(DIST).as_posix().lower()
         name = path.name.lower()
@@ -71,8 +84,12 @@ def main() -> int:
             fail(f"unexpected WordPress-style deploy path: {rel}", failures)
         if name in {"xmlrpc.php", "wp-config.php"}:
             fail(f"unexpected WordPress runtime file: {rel}", failures)
+        rel_url = "/" + rel.lstrip("/")
+        for spam_path in KNOWN_SPAM_PATHS:
+            if rel_url.startswith(spam_path.lower()):
+                fail(f"known hacked URL materialized in deploy output: {rel}", failures)
 
-    # Scan only public text assets that browsers/crawlers can consume as content.
+    # Scan only public text assets that browsers/crawlers can consume.
     for path in files:
         if path.suffix.lower() not in {".html", ".js", ".css"}:
             continue
@@ -84,7 +101,6 @@ def main() -> int:
         for term in FORBIDDEN_PUBLIC_TERMS:
             if term in text:
                 fail(f"high-risk spam term {term!r} found in {path.relative_to(DIST)}", failures)
-
 
     redirects = DIST / "_redirects"
     if redirects.exists():
@@ -123,9 +139,11 @@ def main() -> int:
                 parsed = urlparse(url)
                 if parsed.scheme != "https" or parsed.netloc != CANONICAL_HOST:
                     fail(f"sitemap URL escapes canonical host: {url}", failures)
+                if parsed.path in KNOWN_SPAM_PATHS:
+                    fail(f"known hacked URL appears in sitemap: {url}", failures)
+
             # Explicitly approved indexable surface. New URLs must be added here
-            # only when they have their own canonical page, unique proof/content,
-            # sitemap entry and search-quality review.
+            # only after canonical/content/search-quality review.
             approved = {
                 f"https://{CANONICAL_HOST}/",
                 f"https://{CANONICAL_HOST}/commercial-property-photography-melbourne/",
@@ -147,7 +165,7 @@ def main() -> int:
 
     print(
         "Index hygiene verified: static deploy surface contains no WordPress/PHP runtime, "
-        "no targeted spam indicators, and no unapproved sitemap URLs."
+        "no known hacked URLs, no targeted spam indicators, and no unapproved sitemap URLs."
     )
     return 0
 
