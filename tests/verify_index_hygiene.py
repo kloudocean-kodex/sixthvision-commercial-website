@@ -34,16 +34,26 @@ FORBIDDEN_PUBLIC_TERMS = (
     "318 little lonsdale",
 )
 
-# Search Console / GrowthProof evidence confirmed these hacked URLs. They must
-# remain absent from deploy output, absent from the sitemap and never redirect
-# into a legitimate commercial page.
-KNOWN_SPAM_PATHS = (
-    "/kruis-een-gevaarlijke-wegen-vol-temperaturen-in-de/",
-    "/pinco-onlayn-kazino-ozbekistonda-hisobni-200/",
-    "/oyin-olamida-qiziqarli-imkoniyatlar-jumladan/",
-    "/jedinstvene-strategije-koje-oaravaju-i-vode-do/",
-    "/a-href-https-trinocasino-com-gr-a/",
-)
+RISK_REGISTRY = ROOT / "security" / "known-hacked-paths.txt"
+
+
+def load_known_spam_paths() -> tuple[str, ...]:
+    if not RISK_REGISTRY.exists():
+        raise RuntimeError(f"missing hacked-path registry: {RISK_REGISTRY.relative_to(ROOT)}")
+    paths = tuple(
+        line.strip()
+        for line in RISK_REGISTRY.read_text(encoding="utf-8").splitlines()
+        if line.strip() and not line.lstrip().startswith("#")
+    )
+    if not paths:
+        raise RuntimeError("hacked-path registry is empty")
+    invalid = [path for path in paths if not path.startswith("/") or not path.endswith("/")]
+    if invalid:
+        raise RuntimeError("invalid hacked path(s): " + ", ".join(invalid))
+    return paths
+
+
+KNOWN_SPAM_PATHS = load_known_spam_paths()
 
 # Historical WordPress archive/runtime surfaces must also fall through to a
 # genuine not-found response rather than inheriting homepage equity.
