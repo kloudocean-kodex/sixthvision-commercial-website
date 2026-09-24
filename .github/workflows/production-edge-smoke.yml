@@ -19,6 +19,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 8
     steps:
+      - name: Checkout risk registry
+        uses: actions/checkout@v4
+
       - name: Wait for Cloudflare Pages propagation
         run: sleep 60
 
@@ -113,16 +116,10 @@ jobs:
           # them during the September 2026 cleanup. Do not redirect them into a
           # legitimate page; Google treats a real 404/410 as the permanent
           # removal signal for content with no replacement.
-          hacked_urls=(
-            "https://sixthvisioncommercial.com.au/kruis-een-gevaarlijke-wegen-vol-temperaturen-in-de/"
-            "https://sixthvisioncommercial.com.au/pinco-onlayn-kazino-ozbekistonda-hisobni-200/"
-            "https://sixthvisioncommercial.com.au/oyin-olamida-qiziqarli-imkoniyatlar-jumladan/"
-            "https://sixthvisioncommercial.com.au/jedinstvene-strategije-koje-oaravaju-i-vode-do/"
-            "https://sixthvisioncommercial.com.au/a-href-https-trinocasino-com-gr-a/"
-          )
-          for hacked_url in "${hacked_urls[@]}"; do
-            check_status "$hacked_url" "404"
-          done
+          while IFS= read -r spam_path || [[ -n "$spam_path" ]]; do
+            [[ -z "$spam_path" || "$spam_path" == #* ]] && continue
+            check_status "https://sixthvisioncommercial.com.au${spam_path}" "404"
+          done < security/known-hacked-paths.txt
 
           # Canonical local-entity integrity and hacked-content fingerprints must
           # never leak into either valid homepage HTML or the canonical sitemap.
