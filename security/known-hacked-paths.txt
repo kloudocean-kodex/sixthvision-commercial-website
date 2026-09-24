@@ -1,0 +1,8 @@
+# Known hacked/index-contamination paths discovered during September 2026 cleanup.
+# One absolute-path-per-line. These paths must remain genuine 404s and must never
+# be redirected, materialized in deploy output, or added to the canonical sitemap.
+/kruis-een-gevaarlijke-wegen-vol-temperaturen-in-de/
+/pinco-onlayn-kazino-ozbekistonda-hisobni-200/
+/oyin-olamida-qiziqarli-imkoniyatlar-jumladan/
+/jedinstvene-strategije-koje-oaravaju-i-vode-do/
+/a-href-https-trinocasino-com-gr-a/
