@@ -5,6 +5,10 @@ on:
     branches: [main]
   push:
     branches: [main]
+  schedule:
+    # Daily external integrity check. GitHub cron is UTC; minute 17 avoids the
+    # busiest top-of-hour scheduler window. Scheduled workflows run from main.
+    - cron: '17 20 * * *'
   workflow_dispatch:
 
 permissions:
