@@ -41,6 +41,7 @@ jobs:
           test -f dist/sitemap.xml
           test -f dist/robots.txt
           test -f dist/commercial-property-photography-melbourne/index.html
+          test -f dist/measured-site-plans-melbourne/index.html
           test -f dist/construction-photography-melbourne/index.html
           test -f dist/precision-floor-plans/index.html
           test -f dist/work/lara-land-development-site-mapping/index.html
