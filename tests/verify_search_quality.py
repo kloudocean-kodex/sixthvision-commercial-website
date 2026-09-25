@@ -120,6 +120,14 @@ def verify_commercial_contextual_authority_link(root: Path, failures: list[str])
     if hero_end == -1 or target not in home[:hero_end] or anchor not in home[:hero_end]:
         failures.append("commercial contextual authority link missing from homepage hero/deck")
 
+
+def verify_measured_site_authority_link(root: Path, failures: list[str]) -> None:
+    home = (root / "index.html").read_text(encoding="utf-8", errors="ignore")
+    target = 'href="/measured-site-plans-melbourne/"'
+    anchor = "boundaries, areas, frontages, zoning and"
+    if target not in home or anchor not in home:
+        failures.append("measured-site contextual authority link missing from homepage measure chapter")
+
 def verify_cbd_context(root: Path, failures: list[str]) -> None:
     page = root / "commercial-property-photography-melbourne" / "index.html"
     if not page.exists():
@@ -239,6 +247,7 @@ def main() -> int:
                     failures.append(f"{source_url}: missing fragment target #{target.fragment} in {target_url}")
 
     verify_commercial_contextual_authority_link(root, failures)
+    verify_measured_site_authority_link(root, failures)
     verify_cbd_context(root, failures)
 
     print(f"Search quality audit: {len(parsed)} indexed page(s), {len(warnings)} warning(s), {len(failures)} failure(s)")
