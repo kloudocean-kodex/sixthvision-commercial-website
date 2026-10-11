@@ -32,6 +32,11 @@ jobs:
       - name: Build exact deployable output
         run: python3 build.py
 
+      - name: Verify first-touch bridge runtime contract
+        run: |
+          node --check static/assets/js/commercial-first-touch.v1.js
+          node tests/verify_commercial_first_touch.js
+
       - name: Preserve GrowthProof attribution contract
         run: python3 tests/verify_growthproof.py
 
