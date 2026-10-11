@@ -408,6 +408,33 @@ const status = modal.querySelector('.brief-form__status');
 const btn = form.querySelector('.brief-form__btn');
 const BTN_IDLE = 'Submit Commercial Brief \u2192';
 function say(msg) { if (status) status.textContent = msg; }
+function sayFailure() {
+if (!status) return;
+say('That did not send. Please ');
+[
+['tel:+61474126276', 'call 0474 126 276', 'phone_click', 'phone'],
+['mailto:sixthvision.mel@gmail.com', 'email us', 'email_click', 'email'],
+['https://wa.me/61474126276', 'message us on WhatsApp', 'whatsapp_click', 'whatsapp']
+].forEach(([href, label, eventName, channel], index) => {
+if (index > 0) status.appendChild(document.createTextNode(index === 2 ? ', or ' : ', '));
+const link = document.createElement('a');
+link.href = href;
+link.textContent = label;
+if (channel === 'whatsapp') {
+link.target = '_blank';
+link.rel = 'noopener';
+}
+link.addEventListener('click', () => {
+gpEvent(eventName, {
+event_category: 'commercial_intent',
+contact_channel: channel,
+cta_location: 'brief_failure'
+});
+});
+status.appendChild(link);
+});
+status.appendChild(document.createTextNode('. Your details remain in the form if you want to retry.'));
+}
 function resetBtn() {
 if (!btn) return;
 btn.disabled = false;
@@ -450,7 +477,7 @@ btn.disabled = false;
 btn.textContent = 'Could not send \u2014 call 0474 126 276';
 btn.style.background = '#8C4A4A';
 }
-say('That did not send. Please call 0474 126 276 or email sixthvision.mel@gmail.com and we will pick it up straight away.');
+sayFailure();
 gpEvent('brief_submit_failed', { event_category: 'error', lead_id: leadId });
 });
 });
