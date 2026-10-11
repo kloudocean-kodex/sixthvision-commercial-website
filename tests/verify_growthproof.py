@@ -80,6 +80,22 @@ def main() -> None:
     must(source_js, "status.appendChild(link)", "focusable recovery links in status")
     must(source_js, "Your details remain in the form", "preserve-input recovery copy")
 
+    # Satellite service pages must offer an actionable quote path instead of
+    # relying solely on a visitor's email-client configuration.
+    must(source_js, "get('brief') === '1'", "deep-linked Commercial quote modal")
+    must(source_js, "openModal();", "auto-open modal action")
+    for route in (
+        "commercial-property-photography-melbourne",
+        "construction-photography-melbourne",
+        "measured-site-plans-melbourne",
+        "precision-floor-plans",
+    ):
+        landing = (ROOT / "static" / route / "index.html").read_text(encoding="utf-8")
+        if landing.count('href="/?brief=1"') != 1:
+            raise AssertionError(f"Satellite Commercial hero must open tracked brief form: {route}")
+        must(landing, 'href="mailto:sixthvision.mel@gmail.com?subject=', f"email fallback on {route}")
+        must(landing, 'href="tel:+61474126276"', f"telephone alternative on {route}")
+
     # Built HTML must reference the generated hashed JS, not an unhashed stale file.
     if not re.search(r"assets/js/light\.js\?v=[0-9a-f]{8,}", dist_html):
         raise AssertionError("Built HTML does not contain a content-hashed light.js URL")
