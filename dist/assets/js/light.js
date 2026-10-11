@@ -332,6 +332,9 @@ document.body.style.overflow = '';
 if (lastFocused && lastFocused.focus) lastFocused.focus();
 };
 openBtns.forEach(b => b.addEventListener('click', openModal));
+if (new URLSearchParams(window.location.search).get('brief') === '1') {
+openModal();
+}
 closeBtns.forEach(b => b.addEventListener('click', closeModal));
 addEventListener('keydown', (e) => {
 if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
