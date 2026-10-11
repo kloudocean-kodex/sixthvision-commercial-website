@@ -510,6 +510,14 @@
     };
 
     openBtns.forEach(b => b.addEventListener('click', openModal));
+    // Service pages send high-intent visitors here with ?brief=1. The
+    // homepage's existing form stays the single source of truth; no form,
+    // access key, or conversion tracking is duplicated on satellite pages.
+    // Keep the no-JavaScript fallback as the regular homepage.
+    if (new URLSearchParams(window.location.search).get('brief') === '1') {
+      openModal();
+    }
+
     closeBtns.forEach(b => b.addEventListener('click', closeModal));
     addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
