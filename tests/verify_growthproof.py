@@ -70,6 +70,16 @@ def main() -> None:
         if token in lead_block:
             raise AssertionError(f"PII-like form field leaked into GA4 lead block: {token}")
 
+    # Failed enquiries must offer clickable recovery actions *within* the modal,
+    # which intentionally traps keyboard focus while open. Do not send PII to GA4.
+    must(source_js, "function sayFailure()", "failed-brief recovery helper")
+    must(source_js, "sayFailure();", "failure branch recovery invocation")
+    must(source_js, "cta_location: 'brief_failure'", "failure attribution label")
+    for href in ("tel:+61474126276", "mailto:sixthvision.mel@gmail.com", "https://wa.me/61474126276"):
+        must(source_js, href, f"clickable failure recovery {href}")
+    must(source_js, "status.appendChild(link)", "focusable recovery links in status")
+    must(source_js, "Your details remain in the form", "preserve-input recovery copy")
+
     # Built HTML must reference the generated hashed JS, not an unhashed stale file.
     if not re.search(r"assets/js/light\.js\?v=[0-9a-f]{8,}", dist_html):
         raise AssertionError("Built HTML does not contain a content-hashed light.js URL")
