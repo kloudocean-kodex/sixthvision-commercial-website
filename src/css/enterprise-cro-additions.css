@@ -214,3 +214,15 @@
   color:color-mix(in oklab, var(--ink) 72%, transparent);
 }
 .brief-form__status:empty{margin:0; min-height:0}
+
+/* Actionable, keyboard-focusable recovery links inside the trapped brief modal. */
+.brief-form__status a {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.brief-form__status a:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
