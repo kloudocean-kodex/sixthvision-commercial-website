@@ -96,6 +96,19 @@ def main() -> None:
         must(landing, 'href="mailto:sixthvision.mel@gmail.com?subject=', f"email fallback on {route}")
         must(landing, 'href="tel:+61474126276"', f"telephone alternative on {route}")
 
+    # Delivered-work case studies should lead to the same tracked Commercial
+    # form as the sector pages, with direct calling always available.
+    for case_study in (
+        "cremorne-commercial-floor-plan",
+        "lara-land-development-site-mapping",
+        "maidstone-industrial-amenity-mapping",
+        "williamstown-industrial-site-mapping",
+    ):
+        page = (ROOT / "static" / "work" / case_study / "index.html").read_text(encoding="utf-8")
+        if page.count('class="btn primary" href="/?brief=1"') != 1:
+            raise AssertionError(f"Case-study CTA must open the Commercial brief form: {case_study}")
+        must(page, 'href="tel:+61474126276"', f"phone recovery for {case_study}")
+
     # Built HTML must reference the generated hashed JS, not an unhashed stale file.
     if not re.search(r"assets/js/light\.js\?v=[0-9a-f]{8,}", dist_html):
         raise AssertionError("Built HTML does not contain a content-hashed light.js URL")
