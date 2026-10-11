@@ -109,6 +109,37 @@ def main() -> None:
             raise AssertionError(f"Case-study CTA must open the Commercial brief form: {case_study}")
         must(page, 'href="tel:+61474126276"', f"phone recovery for {case_study}")
 
+    # Service/case-study landing URLs must preserve first touch across the
+    # subsequent same-origin homepage quote-form handoff, never PII/query strings.
+    bridge_path = "assets/js/commercial-first-touch.v1.js"
+    bridge = (ROOT / "static" / bridge_path).read_text(encoding="utf-8")
+    dist_bridge = (ROOT / "dist" / bridge_path).read_text(encoding="utf-8")
+    for needed in (
+        "sv_growthproof_first_touch_v1", "sessionStorage.setItem",
+        "landing_path", "referrer_path", "utm_source", "utm_medium",
+        "utm_campaign", "utm_term", "utm_content", "gclid", "msclkid",
+        "captured_at", "growthproof_measurement_version",
+    ):
+        must(bridge, needed, f"first-touch bridge {needed}")
+    if bridge != dist_bridge:
+        raise AssertionError("Commercial first-touch script did not reach deployable dist")
+    for name in (
+        "commercial-property-photography-melbourne",
+        "construction-photography-melbourne",
+        "measured-site-plans-melbourne",
+        "precision-floor-plans",
+        "work/cremorne-commercial-floor-plan",
+        "work/lara-land-development-site-mapping",
+        "work/maidstone-industrial-amenity-mapping",
+        "work/williamstown-industrial-site-mapping",
+    ):
+        expected_tag = '<script src="/assets/js/commercial-first-touch.v1.js" defer></script>'
+        for root in ("static", "dist"):
+            page = (ROOT / root / name / "index.html").read_text(encoding="utf-8")
+            if page.count(expected_tag) != 1:
+                raise AssertionError(f"First-touch tracking not wired exactly once: {root}/{name}")
+            must(page, 'href="/?brief=1"', f"tracked quote CTA on {root}/{name}")
+
     # Built HTML must reference the generated hashed JS, not an unhashed stale file.
     if not re.search(r"assets/js/light\.js\?v=[0-9a-f]{8,}", dist_html):
         raise AssertionError("Built HTML does not contain a content-hashed light.js URL")
