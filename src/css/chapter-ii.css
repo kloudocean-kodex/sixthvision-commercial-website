@@ -120,7 +120,8 @@
 }
 .measure__film{grid-column:1 / 9; margin:0}
 .measure__filmwin{display:block; overflow:hidden; position:relative}
-.measure__film video{aspect-ratio:16 / 9; object-fit:cover}
+.measure__film video,
+.measure__film img{width:100%; aspect-ratio:16 / 9; object-fit:cover; display:block}
 .measure__filmcap{
   margin-top:clamp(12px,1.2vw,18px);
   display:flex; justify-content:space-between; gap:20px; flex-wrap:wrap;

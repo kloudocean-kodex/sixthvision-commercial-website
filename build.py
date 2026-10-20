@@ -251,8 +251,9 @@ def main() -> int:
     # 4. Video hash — one token covers the whole set; any re-encode changes it.
     vid_dir = DIST / "assets" / "video"
     vh = hashlib.sha256()
-    for f in sorted(vid_dir.glob("*")):
-        vh.update(f.read_bytes())
+    if vid_dir.is_dir():
+        for f in sorted(p for p in vid_dir.glob("*") if p.is_file()):
+            vh.update(f.read_bytes())
     h_vid = vh.hexdigest()[:10]
 
     # 5. HTML

@@ -351,7 +351,17 @@
       }
     }
 
-    if ('IntersectionObserver' in window) {
+    const holdVideo = window.matchMedia('(max-width: 760px)').matches
+      || window.matchMedia('(prefers-reduced-motion: reduce)').matches
+      || (navigator.connection && navigator.connection.saveData);
+
+    if (holdVideo) {
+      vids.forEach(v => {
+        v.removeAttribute('autoplay');
+        v.preload = 'none';
+        v.pause();
+      });
+    } else if ('IntersectionObserver' in window) {
       const videoObserver = new IntersectionObserver((entries) => {
         for (let i = 0; i < entries.length; i++) {
           const entry = entries[i];

@@ -89,6 +89,9 @@ def main() -> None:
         "construction-photography-melbourne",
         "measured-site-plans-melbourne",
         "precision-floor-plans",
+        "commercial-drone-photography-melbourne",
+        "industrial-property-photography-melbourne",
+        "portfolio",
     ):
         landing = (ROOT / "static" / route / "index.html").read_text(encoding="utf-8")
         if landing.count('href="/?brief=1"') != 1:
@@ -128,6 +131,9 @@ def main() -> None:
         "construction-photography-melbourne",
         "measured-site-plans-melbourne",
         "precision-floor-plans",
+        "commercial-drone-photography-melbourne",
+        "industrial-property-photography-melbourne",
+        "portfolio",
         "work/cremorne-commercial-floor-plan",
         "work/lara-land-development-site-mapping",
         "work/maidstone-industrial-amenity-mapping",

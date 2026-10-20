@@ -7,10 +7,8 @@
    same Fraunces/Jost + gold. Only the --sun stop is warmer here, so the identical
    ground/glass tokens render one hour later in the day on their own.
 
-   Asset honesty: the compared frames are the REGISTERED stock pair (same frame,
-   two hours), so the wipe is truthful — no "same shot" claim over two different
-   photographs. It is stock (prefixed `stock-`) and swaps for Ankkush's own
-   registered day→dusk before launch; the caption says so.
+   The chapter shows a real dusk photograph. A registered day-to-dusk pair
+   is not in the library, so there is no comparison slider.
    ========================================================================= */
 
 .ch-light{
@@ -146,6 +144,8 @@
   color:var(--muted); font-weight:500;
 }
 .light__cap b{font-weight:540; color:var(--accent-ink)}
+.light__still{margin:0}
+.light__still img{display:block; width:100%; height:auto}
 
 /* --- RESPONSIVE ---------------------------------------------------------- */
 @media (max-width:1040px){

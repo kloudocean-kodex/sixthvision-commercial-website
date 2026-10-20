@@ -37,6 +37,18 @@
 /precision-floor-plans/*
   Cache-Control: public, max-age=0, must-revalidate
 
+/commercial-drone-photography-melbourne/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/industrial-property-photography-melbourne/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/portfolio/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/measured-site-plans-melbourne/*
+  Cache-Control: public, max-age=0, must-revalidate
+
 /sitemap.xml
   Cache-Control: public, max-age=3600
 

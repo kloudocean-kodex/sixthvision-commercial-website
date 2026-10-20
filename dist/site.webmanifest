@@ -1,0 +1,32 @@
+{
+  "name": "Sixth Vision Commercial",
+  "short_name": "Sixth Vision",
+  "description": "Commercial real estate photographer in Melbourne. Photography, drone, film, floor plans and measured site plans.",
+  "id": "/",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#F8F5EE",
+  "theme_color": "#F4F5F3",
+  "lang": "en-AU",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
