@@ -56,13 +56,13 @@ def patch_footer(text: str) -> str:
         return text
     old = (
         '  <div class="footer__legal">\n'
-        '    <span>Crafted by <a href="https://proddyg.com" target="_blank" rel="noopener">ProddyG</a></span>\n'
+        '    <span>Crafted by ProddyG</span>\n'
         '    <span>&copy; <span id="yr">2026</span> Sixth Vision Commercial. All rights reserved.</span>\n'
         '  </div>'
     )
     new = (
         '  <div class="footer__legal">\n'
-        '    <span>Crafted by <a href="https://proddyg.com" target="_blank" rel="noopener">ProddyG</a></span>\n'
+        '    <span>Crafted by ProddyG</span>\n'
         f'    <span>{LEGAL_NAME} &middot; ABN {ABN_DISPLAY}</span>\n'
         '    <span>&copy; <span id="yr">2026</span> Sixth Vision Commercial. All rights reserved.</span>\n'
         '  </div>'

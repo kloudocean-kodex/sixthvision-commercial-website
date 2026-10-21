@@ -262,7 +262,6 @@ img{max-width:100%}
    collapse into arbitrary reflow whenever JS is absent or motion is
    reduced. (It did exactly that in the first pass.) */
 .l{display:block}
-.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 
 /* --- 5. WORDMARK LOCKUP -------------------------------------------------- */
 /* mark / hairline / descriptor, all sharing one measure. The descriptor is

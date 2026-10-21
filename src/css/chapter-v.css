@@ -1,11 +1,8 @@
 /* ============================================================================
    CHAPTER V — THE CLOSE                                  light: Golden (.82→1.0)
 
-   The payoff. Chapter I opened in fog before sunrise; Chapter V closes with the
-   sun risen over that same fog sea — the light journey completes on one
-   landscape. Then it converts: sectors, the agencies who trust the work, a
-   contact line, and a hero-scale sign-off where COMMERCIAL is finally allowed
-   to be big (the one place the sub-brand goes large — settled in NEXT.md §2b).
+   The close. Sectors, the agencies who trust the work, a contact line, and a
+   hero-scale sign-off where COMMERCIAL is finally allowed to be big.
    ========================================================================= */
 
 .ch-close{
@@ -104,6 +101,16 @@
   font-size:11px; letter-spacing:var(--tr-caps); text-transform:uppercase;
   color:var(--accent-ink); font-weight:560;
 }
+.close__more{
+  display:block; margin-top:10px;
+  font-size:var(--t-12); letter-spacing:var(--tr-caps); text-transform:uppercase;
+  color:var(--accent-ink); font-weight:560;
+}
+.close__reviews{
+  margin:clamp(22px,2.4vw,32px) auto 0; text-align:center;
+  font-size:var(--t-14);
+}
+.close__reviews a{text-decoration:underline; text-underline-offset:3px}
 /* the sector icon — 24px line art, one stroke weight, sitting above the index
    number. Gold at rest so the six read as a set; it deepens to accent-ink on
    hover of the cell, the same "lift" language as the plates. */

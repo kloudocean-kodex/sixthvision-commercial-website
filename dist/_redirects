@@ -1,34 +1,38 @@
 # Cloudflare Pages redirects — 301s from the old WordPress site's indexed URLs.
-# The rebuild is one page, so every old section maps to its equivalent chapter
-# anchor. This preserves the link equity those URLs have already earned instead
-# of dropping ~8 indexed pages into 404s on cutover.
+# The site is a multi-page static build. Old service URLs map to the page that
+# now covers them, so the equity those URLs earned is kept.
 #
 # Format: /old-path  /new-path  status
+# Matches are exact. /work/lara-… is a real case study and is not affected by
+# the /work and /work/ rules below.
 
-# --- old service pages -> the chapter that now covers them ---
+# --- old service pages ---
 /real-estate-photography      /commercial-property-photography-melbourne/      301
 /real-estate-photography/     /commercial-property-photography-melbourne/     301
-/commercial-photography       /#work      301
-/commercial-photography/      /#work      301
-/photography                  /#work      301
-/photography/                 /#work      301
-/video-drone-media            /#light     301
-/video-drone-media/           /#light     301
-/video                        /#light     301
-/video/                       /#light     301
-/drone                        /#light     301
-/drone/                       /#light     301
-/aerial                       /#light     301
-/aerial/                      /#light     301
+/commercial-photography       /commercial-property-photography-melbourne/      301
+/commercial-photography/      /commercial-property-photography-melbourne/     301
+/photography                  /portfolio/      301
+/photography/                 /portfolio/      301
+/video-drone-media            /commercial-drone-photography-melbourne/     301
+/video-drone-media/           /commercial-drone-photography-melbourne/     301
+/video                        /commercial-drone-photography-melbourne/     301
+/video/                       /commercial-drone-photography-melbourne/     301
+/drone                        /commercial-drone-photography-melbourne/     301
+/drone/                       /commercial-drone-photography-melbourne/     301
+/aerial                       /commercial-drone-photography-melbourne/     301
+/aerial/                      /commercial-drone-photography-melbourne/     301
 /floor-plans                  /precision-floor-plans/   301
 /floor-plans/                 /precision-floor-plans/   301
 /precision-floor-plans        /precision-floor-plans/   301
 
 # --- portfolio / about / contact ---
-/portfolio                    /#work      301
-/portfolio/                   /#work      301
-/gallery                      /#work      301
-/gallery/                     /#work      301
+# /portfolio and /portfolio/ are a real page. Do not redirect them.
+/gallery                      /portfolio/      301
+/gallery/                     /portfolio/      301
+/work                         /portfolio/      301
+/work/                        /portfolio/      301
+/projects                     /portfolio/      301
+/projects/                    /portfolio/      301
 /about                        /#close     301
 /about/                       /#close     301
 /about-us                     /#close     301
@@ -54,3 +58,6 @@
 # NOTE: no query-string rules here. Cloudflare Pages matches on PATH only.
 # Unknown legacy query URLs therefore fall through to the static site's normal
 # not-found handling instead of being mass-redirected to the homepage.
+#
+# Host redirects (www → apex) and "Always Use HTTPS" are zone settings.
+# Cloudflare Pages _redirects cannot match a hostname. See the pull request.

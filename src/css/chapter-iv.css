@@ -139,11 +139,7 @@
 }
 .work__bleedcap b{color:var(--accent-ink); font-weight:560}
 
-/* the coda — REAL delivered work. The mood pieces above are stock placeholders;
-   this closing pair is Ankkush's own photography (a boardroom fit-out and a
-   working warehouse), so it carries no "demo" caption — its realness is the
-   point, and it lands the chapter on genuine craft. A ruled eyebrow + a Fraunces
-   line set it apart as the "this is us" moment. */
+/* Case-study row — real delivered jobs, linked through to their pages. */
 .work__real{margin:clamp(60px,7.5vw,120px) var(--gutter) 0; position:relative; z-index:1}
 .work__realeyebrow{margin:0}
 .work__realnote{
@@ -159,6 +155,21 @@
   display:grid; grid-template-columns:repeat(12,minmax(0,1fr));
   column-gap:clamp(16px,2vw,32px); row-gap:clamp(30px,5vw,52px); align-items:end;
 }
+.work__cases{margin:clamp(64px,8vw,120px) var(--gutter) 0}
+.work__caselist{
+  display:grid; grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(16px,2vw,28px);
+}
+.work__caselist a{color:inherit; display:block}
+.work__caselist img{width:100%; height:auto; aspect-ratio:3/2; object-fit:cover; display:block}
+.work__caselist span{
+  display:block; margin-top:12px;
+  font-size:var(--t-12); letter-spacing:var(--tr-caps); text-transform:uppercase; color:var(--accent-ink);
+}
+.work__caselist b{
+  display:block; margin-top:4px; font-weight:500;
+  font-family:Fraunces, Georgia, serif; font-size:var(--t-20); color:var(--ink);
+}
 
 /* --- RESPONSIVE ---------------------------------------------------------- */
 @media (max-width:1040px){
@@ -173,6 +184,10 @@
   .work__pair{row-gap:clamp(30px,5vw,52px)}
   .work__piece .work__win{aspect-ratio:3 / 2 !important}
   .work__realnote{max-width:46ch; font-size:var(--t-24)}
+  .work__caselist{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .work__caselist{grid-template-columns:1fr}
 }
 @media (max-width:720px){
   .work__frame:hover{transform:none}

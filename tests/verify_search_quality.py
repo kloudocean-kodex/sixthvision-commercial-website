@@ -203,6 +203,10 @@ def main() -> int:
             failures.append(f"{url}: canonical is {page.canonical!r}, expected {url!r}")
         if page.robots and "noindex" in page.robots.lower():
             failures.append(f"{url}: sitemap page is marked noindex")
+        raw_html = page_file.read_text(encoding="utf-8", errors="ignore")
+        for banned in ('class="vh"', "proddyg.com", "sixthvision86", "maps.app.goo.gl", "/stock-", "/ai-"):
+            if banned in raw_html:
+                failures.append(f"{url}: banned marker present: {banned}")
 
         for idx, raw in enumerate(page.jsonld, start=1):
             if not raw:

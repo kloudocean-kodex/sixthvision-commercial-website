@@ -4,7 +4,7 @@
 User-agent: *
 Allow: /
 
-# Nothing here is private; the whole site is one page plus its assets.
+# Public multi-page site: homepage, service pages, portfolio and case studies.
 # Explicitly allow the media so Google Images can index the portfolio.
 Allow: /assets/img/
 Allow: /assets/video/

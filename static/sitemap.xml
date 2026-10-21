@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Sixth Vision Commercial — commercial real estate photographer, Melbourne.
-     One-page site: the canonical entry is "/". The in-page chapter anchors are
-     deliberately NOT listed as separate <url> entries — Google treats fragment
-     URLs as the same document, and listing them dilutes rather than helps. -->
+     Public multi-page site: homepage, service pages, portfolio and case studies.
+     In-page chapter anchors are not listed as separate URLs. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://sixthvisioncommercial.com.au/</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
 
@@ -33,13 +32,13 @@
     </image:image>
     <image:image>
       <image:loc>https://sixthvisioncommercial.com.au/assets/img/real-work-5-1400.webp</image:loc>
-      <image:title>Day-to-dusk commercial property photography Melbourne</image:title>
+      <image:title>Office and warehouse photographed at dusk</image:title>
       <image:caption>Office and warehouse unit photographed at dusk.</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://sixthvisioncommercial.com.au/commercial-property-photography-melbourne/</loc>
-    <lastmod>2026-09-22</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -55,7 +54,7 @@
   </url>
   <url>
     <loc>https://sixthvisioncommercial.com.au/measured-site-plans-melbourne/</loc>
-    <lastmod>2026-09-25</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <image:image>
@@ -66,7 +65,7 @@
   </url>
   <url>
     <loc>https://sixthvisioncommercial.com.au/construction-photography-melbourne/</loc>
-    <lastmod>2026-09-22</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -82,7 +81,7 @@
   </url>
   <url>
     <loc>https://sixthvisioncommercial.com.au/precision-floor-plans/</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
     <image:image>
@@ -93,7 +92,7 @@
   </url>
   <url>
     <loc>https://sixthvisioncommercial.com.au/work/lara-land-development-site-mapping/</loc>
-    <lastmod>2026-09-21</lastmod>
+    <lastmod>2026-10-20</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -105,4 +104,37 @@
   <url><loc>https://sixthvisioncommercial.com.au/work/cremorne-commercial-floor-plan/</loc><lastmod>2026-09-21</lastmod><changefreq>yearly</changefreq><priority>0.7</priority><image:image><image:loc>https://sixthvisioncommercial.com.au/assets/img/plan-kipling-1100.webp</image:loc><image:title>Cremorne commercial floor plan — Sixth Vision Commercial</image:title></image:image></url>
   <url><loc>https://sixthvisioncommercial.com.au/work/williamstown-industrial-site-mapping/</loc><lastmod>2026-09-21</lastmod><changefreq>yearly</changefreq><priority>0.7</priority><image:image><image:loc>https://sixthvisioncommercial.com.au/assets/img/plate-maddox-1600.webp</image:loc><image:title>Williamstown industrial site mapping — Sixth Vision Commercial</image:title></image:image></url>
   <url><loc>https://sixthvisioncommercial.com.au/work/maidstone-industrial-amenity-mapping/</loc><lastmod>2026-09-21</lastmod><changefreq>yearly</changefreq><priority>0.7</priority><image:image><image:loc>https://sixthvisioncommercial.com.au/assets/img/plate-mitchell-1600.webp</image:loc><image:title>Maidstone industrial amenity mapping — Sixth Vision Commercial</image:title></image:image></url>
+  <url>
+    <loc>https://sixthvisioncommercial.com.au/portfolio/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://sixthvisioncommercial.com.au/assets/img/real-work-5-1400.webp</image:loc>
+      <image:title>Office and warehouse photographed at dusk</image:title>
+      <image:caption>Office and warehouse facade photographed at dusk by Sixth Vision Commercial.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sixthvisioncommercial.com.au/commercial-drone-photography-melbourne/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://sixthvisioncommercial.com.au/assets/img/plate-lara-dusk-1600.webp</image:loc>
+      <image:title>Commercial drone photography Melbourne — Lara land parcel</image:title>
+      <image:caption>Dusk aerial of a Lara land parcel with boundary dimensions, by Sixth Vision Commercial.</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://sixthvisioncommercial.com.au/industrial-property-photography-melbourne/</loc>
+    <lastmod>2026-10-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://sixthvisioncommercial.com.au/assets/img/real-work-4-1400.webp</image:loc>
+      <image:title>Industrial property photography Melbourne — cold-store docks</image:title>
+      <image:caption>Cold-store distribution building with refrigerated trucks at the docks, photographed by Sixth Vision Commercial.</image:caption>
+    </image:image>
+  </url>
 </urlset>
