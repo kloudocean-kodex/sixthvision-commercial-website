@@ -106,10 +106,13 @@ jobs:
           check_page "https://sixthvisioncommercial.com.au/commercial-drone-photography-melbourne/" "Commercial drone photography in Melbourne"
           check_page "https://sixthvisioncommercial.com.au/industrial-property-photography-melbourne/" "Industrial property photography"
           check_page "https://sixthvisioncommercial.com.au/sitemap.xml" "commercial-property-photography-melbourne"
-          # Guard all delivered projects at the live edge, not only in the repo.
-          check_page "https://sixthvisioncommercial.com.au/sitemap.xml" "/work/cremorne-commercial-floor-plan/"
-          check_page "https://sixthvisioncommercial.com.au/sitemap.xml" "/work/williamstown-industrial-site-mapping/"
-          check_page "https://sixthvisioncommercial.com.au/sitemap.xml" "/work/maidstone-industrial-amenity-mapping/"
+          # Assert new sitemap coverage after merge/deployment. On PRs the live
+          # edge still serves the prior production build, not this branch.
+          if [[ "${{ github.event_name }}" != "pull_request" ]]; then
+            check_page "https://sixthvisioncommercial.com.au/sitemap.xml" "/work/cremorne-commercial-floor-plan/"
+            check_page "https://sixthvisioncommercial.com.au/sitemap.xml" "/work/williamstown-industrial-site-mapping/"
+            check_page "https://sixthvisioncommercial.com.au/sitemap.xml" "/work/maidstone-industrial-amenity-mapping/"
+          fi
 
           # Owner-verified Commercial operating claims must remain visible at the live edge.
           check_page "https://sixthvisioncommercial.com.au/commercial-property-photography-melbourne/" "1,000+"
