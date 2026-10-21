@@ -224,6 +224,23 @@ def main() -> int:
         if page.robots and "noindex" in page.robots.lower():
             failures.append(f"{url}: sitemap page is marked noindex")
         raw_html = page_file.read_text(encoding="utf-8", errors="ignore")
+        # Analytics must cover every money page and delivered case study.
+        # Lara lacked GA4 entirely in the October post-deploy audit.
+        if "G-EHCPLDXEK6" not in raw_html:
+            failures.append(f"{url}: GA4 config missing from indexable page")
+        if url.startswith(host + "/work/") and "phone_click" not in raw_html:
+            failures.append(f"{url}: case study missing phone-click event handler")
+        if url == host + "/":
+            header = raw_html.split("</header>", 1)[0]
+            if 'class="chrome__mobilecall"' not in header or 'href="tel:+61474126276"' not in header:
+                failures.append("homepage mobile header lacks call CTA")
+            if 'data-open-brief' not in header:
+                failures.append("homepage header lacks enquiry CTA")
+            hero = raw_html.split('class="hero-type frame__h1"', 1)[-1].split("</h1>", 1)[0]
+            if "data-line" in hero:
+                failures.append("homepage hero title is still hidden by JavaScript reveal")
+            if 'class="deck frame__deck" data-rise' in raw_html:
+                failures.append("homepage main deck still waits for JavaScript reveal")
         for banned in ('class="vh"', "proddyg.com", "sixthvision86", "maps.app.goo.gl", "/stock-", "/ai-"):
             if banned in raw_html:
                 failures.append(f"{url}: banned marker present: {banned}")
