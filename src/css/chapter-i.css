@@ -42,6 +42,8 @@
 }
 .chrome__contact a{transition:color .5s var(--dolly)}
 .chrome__contact a:hover{color:var(--accent-ink)}
+/* The mobile call link replaces Work where the full phone number cannot fit. */
+.chrome__mobilecall{display:none}
 .chrome__sep{width:1px; height:11px; background:var(--hair-strong)}
 
 /* --- I.a  THE FRAME ------------------------------------------------------ */
@@ -227,7 +229,9 @@
   .facts{grid-template-columns:repeat(2,minmax(0,1fr)); row-gap:26px}
   /* hide the separator with the number it separates, or it strands a lone "|" */
   .chrome__contact .chrome__tel,
-  .chrome__contact .chrome__sep{display:none}
+  .chrome__contact .chrome__sep,
+  .chrome__contact .chrome__work{display:none}
+  .chrome__contact .chrome__mobilecall{display:inline}
 }
 @media (max-width:620px){
   /* a tall narrow frame gives the type block proportionally more height,
