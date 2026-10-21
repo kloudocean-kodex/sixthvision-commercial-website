@@ -172,6 +172,26 @@ def main() -> int:
     if not urls:
         failures.append("sitemap contains no URLs")
 
+    # Regression guard: delivered case studies must never disappear from the
+    # sitemap while the matching public pages remain published. This caught
+    # the October 2026 post-deploy sitemap-coverage discrepancy.
+    case_studies = (
+        "lara-land-development-site-mapping",
+        "cremorne-commercial-floor-plan",
+        "williamstown-industrial-site-mapping",
+        "maidstone-industrial-amenity-mapping",
+    )
+    for slug in case_studies:
+        case_url = f"{host}/work/{slug}/"
+        if case_url not in urls:
+            failures.append(f"delivered case study missing from sitemap: {case_url}")
+    for case_file in sorted((root / "work").glob("*/index.html")):
+        case_url = f"{host}/work/{case_file.parent.name}/"
+        if case_url not in urls:
+            message = f"new delivered case study missing from sitemap: {case_url}"
+            if message not in failures:
+                failures.append(message)
+
     if not robots.exists():
         failures.append(f"missing robots.txt: {robots}")
     else:
