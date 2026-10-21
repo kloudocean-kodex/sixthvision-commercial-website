@@ -1,0 +1,62 @@
+name: Commercial Redirect Proof
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '43 20 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify-canonical-host:
+    name: Verify WWW redirect and sitemap
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Verify live HTTP 301 redirects with exact path and query preservation
+        shell: bash
+        run: |
+          set -euo pipefail
+          check_redirect() {
+            local source="$1"
+            local expected="$2"
+            local headers status location
+            headers="$(mktemp)"
+            status="$(curl --silent --show-error --connect-timeout 10 --max-time 25 --output /dev/null --dump-header "$headers" --write-out '%{http_code}' "$source")"
+            location="$(grep -i '^location:' "$headers" | tail -1 | cut -d' ' -f2- | tr -d '\r')"
+            rm -f "$headers"
+            printf '%s -> HTTP %s -> %s\n' "$source" "$status" "$location"
+            if [[ "$status" != '301' || "$location" != "$expected" ]]; then
+              echo "::error::Expected an exact HTTP 301 to $expected for $source"
+              exit 1
+            fi
+          }
+
+          check_redirect "https://www.sixthvisioncommercial.com.au/" "https://sixthvisioncommercial.com.au/"
+          check_redirect "https://www.sixthvisioncommercial.com.au/portfolio/?source=seo-audit" "https://sixthvisioncommercial.com.au/portfolio/?source=seo-audit"
+          check_redirect "https://www.sixthvisioncommercial.com.au/commercial-drone-photography-melbourne/" "https://sixthvisioncommercial.com.au/commercial-drone-photography-melbourne/"
+          echo 'All www -> apex 301 tests passed.'
+
+      - name: Verify live canonical sitemap contains 12 distinct URLs and case studies
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --show-error --silent --connect-timeout 10 --max-time 25 \
+            "https://sixthvisioncommercial.com.au/sitemap.xml" -o sitemap-live.xml
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          tree = ET.parse("sitemap-live.xml")
+          ns = "{http://www.sitemaps.org/schemas/sitemap/0.9}"
+          urls = [node.text.strip() for node in tree.findall(f"{ns}url/{ns}loc")]
+          assert len(urls) == 12, f"Expected 12 URLs, found {len(urls)}"
+          assert len(urls) == len(set(urls)), "Duplicate sitemap URL entries"
+          for slug in ("lara-land-development-site-mapping", "cremorne-commercial-floor-plan",
+                       "williamstown-industrial-site-mapping", "maidstone-industrial-amenity-mapping"):
+              expected = f"https://sixthvisioncommercial.com.au/work/{slug}/"
+              assert expected in urls, f"Missing sitemap URL: {expected}"
+              print(f"PASS sitemap includes {expected}")
+          print(f"PASS canonical live sitemap contains {len(urls)} distinct URLs")
+          PY
